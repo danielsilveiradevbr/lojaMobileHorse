@@ -9,7 +9,6 @@ uses
 
 type
   TfrmPrincipal = class(TForm)
-    LabelEdit1: TLabelEdit;
   private
     { Private declarations }
   public

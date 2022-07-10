@@ -256,6 +256,21 @@
         <DCCReference Include="src\providers\request\Providers.Request.intf.pas"/>
         <DCCReference Include="src\providers\request\Providers.Request.pas"/>
         <DCCReference Include="src\providers\Providers.Session.pas"/>
+        <DCCReference Include="src\providers\frames\Providers.Frames.Base.pas">
+            <Form>FrameBase</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\providers\frames\Providers.Frames.Base.View.pas">
+            <Form>FrameBaseView</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\views\Views.Login.pas">
+            <Form>frmLogin</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -299,12 +314,6 @@
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\iossimulator\libpcre.dylib" Class="DependencyModule">
                     <Platform Name="iOSSimulator">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Win32\Debug\Mobile.exe" Configuration="Debug" Class="ProjectOutput">
-                    <Platform Name="Win32">
-                        <RemoteName>Mobile.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

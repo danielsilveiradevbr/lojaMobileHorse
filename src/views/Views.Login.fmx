@@ -1,0 +1,113 @@
+inherited frmLogin: TfrmLogin
+  inherited lytContent: TLayout
+    object retContent: TRectangle
+      Align = Contents
+      Fill.Color = xFFF1F3F6
+      Size.Width = 350.000000000000000000
+      Size.Height = 500.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+    end
+    object retLogin: TRectangle
+      Align = Center
+      Fill.Color = claWhite
+      Size.Width = 300.000000000000000000
+      Size.Height = 450.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      XRadius = 5.000000000000000000
+      YRadius = 5.000000000000000000
+      object sdwLogin: TShadowEffect
+        Distance = 0.500000000000000000
+        Direction = 45.000000000000000000
+        Softness = 0.200000002980232200
+        Opacity = 0.200000002980232200
+        ShadowColor = claBlack
+      end
+      object lytLogo: TLayout
+        Align = Top
+        Size.Width = 300.000000000000000000
+        Size.Height = 100.000000000000000000
+        Size.PlatformDefault = False
+        object imgLogo: TPath
+          Align = Center
+          Size.Width = 60.000000000000000000
+          Size.Height = 60.000000000000000000
+          Size.PlatformDefault = False
+        end
+      end
+      object lytBemVindo: TLayout
+        Align = Top
+        Position.Y = 100.000000000000000000
+        Size.Width = 300.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        object lblBemVindo: TLabel
+          StyledSettings = [Style]
+          Position.X = 80.000000000000000000
+          Position.Y = 16.000000000000000000
+          TextSettings.Font.Family = 'Roboto'
+          TextSettings.Font.Size = 18.000000000000000000
+          TextSettings.FontColor = xFF6B757D
+          TextSettings.HorzAlign = Center
+          Text = 'Bem Vindo'
+        end
+      end
+      object lytContentLogin: TLayout
+        Align = Client
+        Size.Width = 300.000000000000000000
+        Size.Height = 300.000000000000000000
+        Size.PlatformDefault = False
+        object btnEntrar: TButton
+          Align = Top
+          Margins.Left = 20.000000000000000000
+          Margins.Top = 30.000000000000000000
+          Margins.Right = 20.000000000000000000
+          Position.X = 20.000000000000000000
+          Position.Y = 154.000000000000000000
+          Size.Width = 260.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Entrar'
+        end
+        object edtSenha: TLabelEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Top
+          Text = 'Senha'
+          TextSettings.Font.Family = 'Roboto'
+          TextSettings.Font.Size = 18.000000000000000000
+          Position.X = 20.000000000000000000
+          Position.Y = 92.000000000000000000
+          Margins.Left = 20.000000000000000000
+          Margins.Top = 30.000000000000000000
+          Margins.Right = 20.000000000000000000
+          Size.Width = 260.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextPrompt = 'senha'
+          StyledSettings = [Style, FontColor]
+          FocusedColor = xFF006060
+          UnFocusedColor = xFF949494
+        end
+        object edtUsuario: TLabelEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Top
+          Text = 'Usu'#225'rio'
+          TextSettings.Font.Family = 'Roboto'
+          TextSettings.Font.Size = 18.000000000000000000
+          Position.X = 20.000000000000000000
+          Position.Y = 30.000000000000000000
+          Margins.Left = 20.000000000000000000
+          Margins.Top = 30.000000000000000000
+          Margins.Right = 20.000000000000000000
+          Size.Width = 260.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          StyledSettings = [Style, FontColor]
+          FocusedColor = xFF006060
+          UnFocusedColor = xFF949494
+        end
+      end
+    end
+  end
+end
