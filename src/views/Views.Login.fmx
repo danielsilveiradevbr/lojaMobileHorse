@@ -60,19 +60,24 @@ inherited frmLogin: TfrmLogin
         Size.PlatformDefault = False
         object btnEntrar: TButton
           Align = Top
+          StyledSettings = [Style, FontColor]
           Margins.Left = 20.000000000000000000
           Margins.Top = 30.000000000000000000
           Margins.Right = 20.000000000000000000
           Position.X = 20.000000000000000000
           Position.Y = 154.000000000000000000
           Size.Width = 260.000000000000000000
-          Size.Height = 32.000000000000000000
+          Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
+          StyleLookup = 'bluebutton'
           Text = 'Entrar'
+          TextSettings.Font.Family = 'Roboto'
+          TextSettings.Font.Size = 18.000000000000000000
         end
         object edtSenha: TLabelEdit
           Touch.InteractiveGestures = [LongTap, DoubleTap]
           Align = Top
+          StyleLookup = 'transparentedit'
           Text = 'Senha'
           TextSettings.Font.Family = 'Roboto'
           TextSettings.Font.Size = 18.000000000000000000
@@ -92,6 +97,7 @@ inherited frmLogin: TfrmLogin
         object edtUsuario: TLabelEdit
           Touch.InteractiveGestures = [LongTap, DoubleTap]
           Align = Top
+          StyleLookup = 'transparentedit'
           Text = 'Usu'#225'rio'
           TextSettings.Font.Family = 'Roboto'
           TextSettings.Font.Size = 18.000000000000000000
@@ -106,6 +112,39 @@ inherited frmLogin: TfrmLogin
           StyledSettings = [Style, FontColor]
           FocusedColor = xFF006060
           UnFocusedColor = xFF949494
+        end
+        object lytFooter: TLayout
+          Align = Bottom
+          Position.Y = 250.000000000000000000
+          Size.Width = 300.000000000000000000
+          Size.Height = 50.000000000000000000
+          Size.PlatformDefault = False
+          object lblSolicitarAcesso: TLabel
+            StyledSettings = [Style]
+            Position.X = 15.000000000000000000
+            Position.Y = 13.000000000000000000
+            Size.Width = 110.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.Font.Family = 'Roboto'
+            TextSettings.Font.Size = 13.000000000000000000
+            TextSettings.FontColor = xFF1464BE
+            TextSettings.HorzAlign = Center
+            Text = 'Solicitar Acesso'
+          end
+          object lblRecuperSenha: TLabel
+            StyledSettings = [Style]
+            Position.X = 169.000000000000000000
+            Position.Y = 13.000000000000000000
+            Size.Width = 110.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.Font.Family = 'Roboto'
+            TextSettings.Font.Size = 13.000000000000000000
+            TextSettings.FontColor = xFF1464BE
+            TextSettings.HorzAlign = Center
+            Text = 'Recuperar Senha'
+          end
         end
       end
     end

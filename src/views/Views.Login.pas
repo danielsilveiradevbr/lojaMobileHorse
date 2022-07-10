@@ -21,6 +21,9 @@ type
     btnEntrar: TButton;
     edtSenha: TLabelEdit;
     edtUsuario: TLabelEdit;
+    lytFooter: TLayout;
+    lblSolicitarAcesso: TLabel;
+    lblRecuperSenha: TLabel;
   private
     { Private declarations }
   public
