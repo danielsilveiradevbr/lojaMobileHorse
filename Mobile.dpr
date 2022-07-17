@@ -10,7 +10,14 @@ uses
   Providers.Session in 'src\providers\Providers.Session.pas',
   Providers.Frames.Base in 'src\providers\frames\Providers.Frames.Base.pas' {FrameBase: TFrame},
   Providers.Frames.Base.View in 'src\providers\frames\Providers.Frames.Base.View.pas' {FrameBaseView: TFrame},
-  Views.Login in 'src\views\Views.Login.pas' {frmLogin: TFrame};
+  Views.Login in 'src\views\Views.Login.pas' {frmLogin: TFrame},
+  Services.Base in 'src\services\Services.Base.pas' {ServiceBase: TDataModule},
+  Services.Login in 'src\services\Services.Login.pas' {ServiceLogin: TDataModule},
+  Views.Menu in 'src\views\Views.Menu.pas' {FrmMenu: TFrame},
+  Views.Home in 'src\views\Views.Home.pas' {frmHome: TFrame},
+  Views.Perfil in 'src\views\Views.Perfil.pas' {frmPerfil: TFrame},
+  Providers.Models.User in 'src\providers\Models\Providers.Models.User.pas',
+  Services.Perfil in 'src\services\Services.Perfil.pas' {ServicePerfil: TDataModule};
 
 {$R *.res}
 

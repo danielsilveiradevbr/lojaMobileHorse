@@ -31,7 +31,7 @@ type
    function execute(const AMethod: TRestRequestMethod): IResponse;
   public
     class function New: IRequest;
-    destructor destroy; override;
+    destructor Destroy; override;
   end;
 
 implementation

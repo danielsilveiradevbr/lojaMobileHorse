@@ -34,7 +34,7 @@ begin
   if FActivate then
     exit;
   LFrmLogin := TFrmLogin.create(lylContent);
-  LFrmLogin.Align := TAlignLayout.Client;
+  LFrmLogin.Align := TAlignLayout.Contents;
   lylContent.AddObject(LFrmLogin);
   FActivate := true;
 end;
