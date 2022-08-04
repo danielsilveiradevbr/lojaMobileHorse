@@ -176,6 +176,7 @@ inherited FrmMenu: TFrmMenu
           Size.Height = 40.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'TransparentNormalButton'
+          OnClick = btnPedidoClick
           object imgPedido: TPath
             Align = Left
             Data.Path = {

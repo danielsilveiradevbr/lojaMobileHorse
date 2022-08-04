@@ -30,6 +30,7 @@ type
     lblPerfil: TLabel;
     lineSeparator: TLine;
     procedure btnPerfilClick(Sender: TObject);
+    procedure btnPedidoClick(Sender: TObject);
   private
     FActiveFrame: TFrameBaseView;
     procedure changeFrame<T: TFrameBaseView>;
@@ -44,9 +45,15 @@ implementation
 
 {$R *.fmx}
 
-uses Views.Home, Views.Perfil;
+uses Views.Home, Views.Perfil, Views.Pedido;
 
 { TFrmMenu }
+
+procedure TFrmMenu.btnPedidoClick(Sender: TObject);
+begin
+  inherited;
+  changeFrame<TFrmPedido>;
+end;
 
 procedure TFrmMenu.btnPerfilClick(Sender: TObject);
 begin

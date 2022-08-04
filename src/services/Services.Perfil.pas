@@ -11,6 +11,7 @@ type
     { Private declarations }
   public
     function DonwloadFoto(): TMemoryStream;
+    procedure UploadFoto(const AFoto: TMemoryStream);
   end;
 
 implementation
@@ -38,6 +39,19 @@ begin
       result.position := 0;
     end;
   end;
+end;
+
+procedure TServicePerfil.UploadFoto(const AFoto: TMemoryStream);
+begin
+  var LResponse := TRequest
+                   .new
+                   .BaseUrl('http://localhost:9000')
+                   .Resource('usuarios/' + Session.User.ID.ToString + '/foto')
+                   .contentType('application/octet-stream')
+                   .AddBody(Afoto, false)
+                   .Post;
+  if LResponse.StatusCode <> 204 then
+    raise Exception.create(LResponse.Content);
 end;
 
 end.

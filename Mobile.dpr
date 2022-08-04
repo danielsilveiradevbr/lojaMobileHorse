@@ -17,7 +17,8 @@ uses
   Views.Home in 'src\views\Views.Home.pas' {frmHome: TFrame},
   Views.Perfil in 'src\views\Views.Perfil.pas' {frmPerfil: TFrame},
   Providers.Models.User in 'src\providers\Models\Providers.Models.User.pas',
-  Services.Perfil in 'src\services\Services.Perfil.pas' {ServicePerfil: TDataModule};
+  Services.Perfil in 'src\services\Services.Perfil.pas' {ServicePerfil: TDataModule},
+  Views.Pedido in 'src\views\Views.Pedido.pas' {FrmPedido: TFrame};
 
 {$R *.res}
 

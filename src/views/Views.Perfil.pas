@@ -31,10 +31,12 @@ type
     imgGaleria: TPath;
     lblGaleria: TLabel;
     btnTrocarFoto: TButton;
-    procedure btnTrocarFotoClick(Sender: TObject);
+    OpenDialog: TOpenDialog;
+    procedure btnGaleriaClick(Sender: TObject);
   private
     FService: TServicePerfil;
     procedure carregarFotoUsuario();
+    procedure OnChangeProfileImage(const ABitmap: TBitmap);
   public
     constructor Create(AOwner: TComponent); override;
   end;
@@ -45,10 +47,13 @@ implementation
 
 { TfrmPerfil }
 
-procedure TfrmPerfil.btnTrocarFotoClick(Sender: TObject);
+procedure TfrmPerfil.btnGaleriaClick(Sender: TObject);
 begin
   inherited;
-  ShowMessage('op');
+{$IFDEF MSWINDOWS}
+  if openDialog.execute then
+    OnChangeProfileImage(TBitmap.CreateFromFile(OpenDialog.FileName));
+{$ENDIF}
 end;
 
 procedure TfrmPerfil.carregarFotoUsuario;
@@ -72,6 +77,22 @@ begin
   FService := TServicePerfil.create(self);
   MultiView.Height := 100;
   carregarFotoUsuario;
+end;
+
+procedure TfrmPerfil.OnChangeProfileImage(const ABitmap: TBitmap);
+begin
+  var LFoto := TMemoryStream.Create;
+  try
+    ABitmap.SaveToStream(LFoto);
+    LFoto.Position := 0;
+    if LFoto.size > 0 then
+      imgPerfil.fill.bitmap.bitmap.loadFromStream(LFoto);
+    LFoto.Position := 0;
+    FService.UploadFoto(LFoto);
+  finally
+    Lfoto.Free;
+  end;
+  MultiView.HideMaster;
 end;
 
 end.
