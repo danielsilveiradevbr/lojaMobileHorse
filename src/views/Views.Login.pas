@@ -37,7 +37,7 @@ implementation
 
 {$R *.fmx}
 
-uses Views.Menu;
+uses Views.Menu, Providers.Aguarde;
 
 
 { TfrmLogin }
@@ -45,15 +45,25 @@ uses Views.Menu;
 procedure TfrmLogin.btnEntrarClick(Sender: TObject);
 begin
   inherited;
-  try
-    FService.login(edtUsuario.text, edtSenha.text);
-    edtUsuario.SetValue(emptyStr);
-    edtSenha.SetValue(emptyStr);
-    goToMenu();
-  except
-    on E:exception do
-      showMessage(E.message);
-  end;
+  TAguarde.Aguardar(
+    procedure
+    begin
+      try
+        FService.login(edtUsuario.text, edtSenha.text);
+        sleep(2000);
+        TThread.synchronize(TThread.current,
+          procedure
+          begin
+            edtUsuario.SetValue(emptyStr);
+            edtSenha.SetValue(emptyStr);
+          end);
+        goToMenu();
+      except
+        on E:exception do
+          showMessage(E.message);
+      end;
+    end
+  );
 end;
 
 procedure TfrmLogin.goToMenu();

@@ -18,7 +18,11 @@ uses
   Views.Perfil in 'src\views\Views.Perfil.pas' {frmPerfil: TFrame},
   Providers.Models.User in 'src\providers\Models\Providers.Models.User.pas',
   Services.Perfil in 'src\services\Services.Perfil.pas' {ServicePerfil: TDataModule},
-  Views.Pedido in 'src\views\Views.Pedido.pas' {FrmPedido: TFrame};
+  Views.Pedido in 'src\views\Views.Pedido.pas' {FrmPedido: TFrame},
+  Services.Pedido in 'src\services\Services.Pedido.pas' {ServicePedido: TDataModule},
+  Providers.Frames.Pedido in 'src\providers\Providers.Frames.Pedido.pas' {FramePedido: TFrame},
+  Providers.Aguarde in 'src\providers\aguarde\Providers.Aguarde.pas',
+  Providers.Aguarde.Frame in 'src\providers\aguarde\Providers.Aguarde.Frame.pas' {FrameAguarde: TFrame};
 
 {$R *.res}
 

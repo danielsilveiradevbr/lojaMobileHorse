@@ -71,6 +71,7 @@ begin
   FActiveFrame := T.create(lytActiveForm);
   FActiveFrame.align := TAlignLayout.Contents;
   lytActiveForm.addObject(FActiveFrame);
+  FActiveFrame.DoAfterShow;
   if MultiView.IsShowed then
     MultiView.HideMaster;
 end;

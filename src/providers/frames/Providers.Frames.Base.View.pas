@@ -12,6 +12,8 @@ type
     lytContent: TLayout;
   protected
     function Session: TSession;
+  public
+    procedure DoAfterShow; virtual;
   end;
 
 implementation
@@ -19,6 +21,11 @@ implementation
 {$R *.fmx}
 
 { TFrameBaseView }
+
+procedure TFrameBaseView.DoAfterShow;
+begin
+
+end;
 
 function TFrameBaseView.Session: TSession;
 begin
