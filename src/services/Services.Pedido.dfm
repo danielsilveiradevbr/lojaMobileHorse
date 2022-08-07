@@ -1,4 +1,5 @@
 inherited ServicePedido: TServicePedido
+  OldCreateOrder = True
   OnCreate = DataModuleCreate
   object mtPedidos: TFDMemTable
     FetchOptions.AssignedValues = [evMode]

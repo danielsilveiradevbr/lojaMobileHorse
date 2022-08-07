@@ -122,10 +122,11 @@ begin
       FService.ListarPedidosUsuario;
       sleep(2000);
       TThread.synchronize(TThread.current,
-          procedure
-          begin
-            DesignPedidos;
-          end);
+        procedure
+        begin
+          DesignPedidos;
+        end
+      );
     end
   );
 end;

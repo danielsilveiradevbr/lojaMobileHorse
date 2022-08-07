@@ -50,7 +50,6 @@ begin
     raise Exception.Create(LResponse.Content);
   mtPedidos.EmptyDataSet;
   mtPedidos.LoadFromJSON(LResponse.JSONValue.GetValue<TJSONArray>('data'), false);
-
 end;
 
 end.

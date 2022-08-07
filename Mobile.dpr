@@ -22,7 +22,9 @@ uses
   Services.Pedido in 'src\services\Services.Pedido.pas' {ServicePedido: TDataModule},
   Providers.Frames.Pedido in 'src\providers\Providers.Frames.Pedido.pas' {FramePedido: TFrame},
   Providers.Aguarde in 'src\providers\aguarde\Providers.Aguarde.pas',
-  Providers.Aguarde.Frame in 'src\providers\aguarde\Providers.Aguarde.Frame.pas' {FrameAguarde: TFrame};
+  Providers.Aguarde.Frame in 'src\providers\aguarde\Providers.Aguarde.Frame.pas' {FrameAguarde: TFrame},
+  Views.Consulta.Cliente in 'src\views\Views.Consulta.Cliente.pas' {FrameConsutaCliente: TFrame},
+  Services.Consulta.Cliente in 'src\services\Services.Consulta.Cliente.pas' {ServiceConsultaCliente: TDataModule};
 
 {$R *.res}
 

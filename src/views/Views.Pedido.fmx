@@ -188,8 +188,8 @@ inherited FrmPedido: TFrmPedido
                   0000A04100003041}
                 Fill.Color = xFF1464BE
                 HitTest = False
-                Size.Width = 28.000000000000000000
-                Size.Height = 28.000000000000000000
+                Size.Width = 24.000000000000000000
+                Size.Height = 24.000000000000000000
                 Size.PlatformDefault = False
                 Stroke.Color = claWhite
                 WrapMode = Fit
@@ -224,8 +224,8 @@ inherited FrmPedido: TFrmPedido
                   030000000000984100004040}
                 Fill.Color = xFF1464BE
                 HitTest = False
-                Size.Width = 28.000000000000000000
-                Size.Height = 28.000000000000000000
+                Size.Width = 24.000000000000000000
+                Size.Height = 24.000000000000000000
                 Size.PlatformDefault = False
                 Stroke.Color = claWhite
                 WrapMode = Fit
@@ -321,8 +321,8 @@ inherited FrmPedido: TFrmPedido
                   000040410000A04002000000000018410000A04003000000000018410000A040}
                 Fill.Color = xFF1464BE
                 HitTest = False
-                Size.Width = 28.000000000000000000
-                Size.Height = 28.000000000000000000
+                Size.Width = 24.000000000000000000
+                Size.Height = 24.000000000000000000
                 Size.PlatformDefault = False
                 Stroke.Color = claWhite
                 WrapMode = Fit
