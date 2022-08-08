@@ -13,7 +13,7 @@ inherited FrmPedido: TFrmPedido
       Size.Width = 350.000000000000000000
       Size.Height = 500.000000000000000000
       Size.PlatformDefault = False
-      TabIndex = 0
+      TabIndex = 1
       TabPosition = None
       Sizes = (
         350s
@@ -24,7 +24,7 @@ inherited FrmPedido: TFrmPedido
         CustomIcon = <
           item
           end>
-        IsSelected = True
+        IsSelected = False
         Size.Width = 8.000000000000000000
         Size.Height = 8.000000000000000000
         Size.PlatformDefault = False
@@ -143,7 +143,7 @@ inherited FrmPedido: TFrmPedido
         CustomIcon = <
           item
           end>
-        IsSelected = False
+        IsSelected = True
         Size.Width = 8.000000000000000000
         Size.Height = 8.000000000000000000
         Size.PlatformDefault = False
@@ -266,7 +266,7 @@ inherited FrmPedido: TFrmPedido
                 TextSettings.FontColor = xFF1464BE
                 Text = 'Cliente'
               end
-              object txtCliente: TLabel
+              object txtNomeCliente: TLabel
                 Align = Top
                 StyledSettings = [Style]
                 Margins.Left = 15.000000000000000000
@@ -302,6 +302,7 @@ inherited FrmPedido: TFrmPedido
               Size.Height = 48.000000000000000000
               Size.PlatformDefault = False
               StyleLookup = 'TransparentRoundButton'
+              OnClick = btnBuscaClienteClick
               object imgBuscaCliente: TPath
                 Align = Center
                 Data.Path = {

@@ -31,7 +31,7 @@ type
     lytContentCliente: TLayout;
     lytCliente: TLayout;
     lblCliente: TLabel;
-    txtCliente: TLabel;
+    txtNomeCliente: TLabel;
     btnBuscaCliente: TButton;
     imgBuscaCliente: TPath;
     vsbProdutos: TVertScrollBox;
@@ -41,9 +41,12 @@ type
     Line1: TLine;
     procedure btnBtnAdicionarVendaClick(Sender: TObject);
     procedure btnVoltarClick(Sender: TObject);
+    procedure btnBuscaClienteClick(Sender: TObject);
   private
     FService: TServicePedido;
     procedure DesignPedidos;
+    procedure NovaVenda;
+    procedure OnSelectCliente(const ADataSet: TDataSet);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -54,20 +57,30 @@ implementation
 
 {$R *.fmx}
 
-uses Providers.Frames.Pedido, Providers.Aguarde;
+uses Providers.Frames.Pedido, Providers.Aguarde, Views.Consulta.Cliente;
 
 { TFrmPedido }
 
 procedure TFrmPedido.btnBtnAdicionarVendaClick(Sender: TObject);
 begin
   inherited;
-  tabControlPedido.next;
+  NovaVenda;
+end;
+
+procedure TFrmPedido.btnBuscaClienteClick(Sender: TObject);
+begin
+  inherited;
+  var LFrame := TFrameConsutaCliente.create(self);
+  LFrame.align := TAlignLayout.Contents;
+  LFrame.callBack := OnSelectCliente;
+  lytContent.addObject(LFrame);
+  LFrame.BringToFront;
 end;
 
 procedure TFrmPedido.btnVoltarClick(Sender: TObject);
 begin
   inherited;
-  TabControlPedido.ActiveTab := TabItemConsulta;
+  TabControlPedido.Previous();
 end;
 
 constructor TFrmPedido.Create(AOwner: TComponent);
@@ -129,6 +142,19 @@ begin
       );
     end
   );
+end;
+
+procedure TFrmPedido.NovaVenda;
+begin
+  btnAdicionarProduto.Visible := false;
+  txtNomeCliente.text := 'Nenhum cliente selecionado';
+  txtTotal.text := formatFloat('R$ ,0.00;', 0);
+  TabControlPedido.Next();
+end;
+
+procedure TFrmPedido.OnSelectCliente(const ADataSet: TDataSet);
+begin
+  txtNomeCliente.text := ADataset.fieldByName('nome').asString;
 end;
 
 end.

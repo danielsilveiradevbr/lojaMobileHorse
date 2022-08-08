@@ -1,0 +1,38 @@
+inherited FrameList: TFrameList
+  Size.Height = 50.000000000000000000
+  object retContent: TRectangle
+    Align = Client
+    Fill.Kind = None
+    Size.Width = 350.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+    object btnList: TButton
+      Align = Client
+      Size.Width = 350.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'transparentNormalButton'
+      OnClick = btnListClick
+      object lblDescricao: TLabel
+        Align = Client
+        StyledSettings = [Style, FontColor]
+        Margins.Left = 15.000000000000000000
+        Size.Width = 335.000000000000000000
+        Size.Height = 48.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Family = 'Roboto'
+        TextSettings.Font.Size = 18.000000000000000000
+        Text = 'Descri'#231#227'o'
+      end
+    end
+    object LineSeparatorHeader: TLine
+      Align = Bottom
+      LineType = Diagonal
+      Position.Y = 48.000000000000000000
+      Size.Width = 350.000000000000000000
+      Size.Height = 2.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+end

@@ -24,7 +24,9 @@ uses
   Providers.Aguarde in 'src\providers\aguarde\Providers.Aguarde.pas',
   Providers.Aguarde.Frame in 'src\providers\aguarde\Providers.Aguarde.Frame.pas' {FrameAguarde: TFrame},
   Views.Consulta.Cliente in 'src\views\Views.Consulta.Cliente.pas' {FrameConsutaCliente: TFrame},
-  Services.Consulta.Cliente in 'src\services\Services.Consulta.Cliente.pas' {ServiceConsultaCliente: TDataModule};
+  Services.Consulta.Cliente in 'src\services\Services.Consulta.Cliente.pas' {ServiceConsultaCliente: TDataModule},
+  Providers.Frames.List in 'src\providers\frames\list\Providers.Frames.List.pas' {FrameList: TFrame},
+  Providers.Callback in 'src\providers\callback\Providers.Callback.pas';
 
 {$R *.res}
 

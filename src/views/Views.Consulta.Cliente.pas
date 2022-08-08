@@ -6,7 +6,8 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   Providers.Frames.Base.View, FMX.Layouts, FMX.Effects, FMX.Edit, FMX.Objects,
-  FMX.Controls.Presentation, Services.Consulta.Cliente, Data.Db;
+  FMX.Controls.Presentation, Services.Consulta.Cliente, Data.Db,
+  System.generics.collections, Providers.Frames.List, Providers.Callback;
 
 type
   TFrameConsutaCliente = class(TFrameBaseView)
@@ -24,12 +25,17 @@ type
     imgBuscaVazia: TPath;
     vsbClientes: TVertScrollBox;
     procedure btnBuscaClienteClick(Sender: TObject);
+    procedure btnVoltarClick(Sender: TObject);
   private
     FService: TServiceConsultaCliente;
+    FListaFrames: TObjectList<TFrameList>;
+    FCallBack: TCallBackDataSet;
     procedure DesignClientes;
+    procedure OnSelectCleint(const AValue: String);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+    property CallBack: TCallBackDataSet read FCallBack write FCallBack;
   end;
 
 implementation
@@ -57,10 +63,18 @@ begin
   );
 end;
 
+procedure TFrameConsutaCliente.btnVoltarClick(Sender: TObject);
+begin
+  inherited;
+  self.owner.removecomponent(self);
+  self.disposeOf;
+end;
+
 constructor TFrameConsutaCliente.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FService := TServiceConsultaCliente.create(self);
+  FListaFrames := TObjectList<TFrameList>.create;
 end;
 
 procedure TFrameConsutaCliente.DesignClientes;
@@ -72,10 +86,17 @@ begin
   vsbClientes.beginUpdate;
   FService.mtClientes.first;
   try
-    for var ind := Pred(vsbClientes.Content.controlsCount) downto 0 do
-      vsbClientes.Controls.items[ind].disposeOf;
+    FListaFrames.clear;
     while not FService.mtClientes.eof do
     begin
+      var LFrame := TFrameList.create(vsbClientes);
+      LFrame.align := TAlignLayout.top;
+      LFrame.identify := FService.mtClientesid.asString;
+      LFrame.lblDescricao.text := FService.mtClientesnome.AsString;
+      LFrame.Name := LFrame.classname + vsbClientes.content.controlsCount.toString;
+      LFrame.parent := vsbClientes;
+      LFrame.CallBack := OnSelectCleint;
+      FListaFrames.add(LFrame);
       FService.mtClientes.next;
     end;
   finally
@@ -86,7 +107,17 @@ end;
 destructor TFrameConsutaCliente.Destroy;
 begin
   FService.free;
+  FListaFrames.free;
   inherited;
+end;
+
+procedure TFrameConsutaCliente.OnSelectCleint(const AValue: String);
+begin
+  FService.mtClientes.Locate('id', AValue, []);
+  if assigned(FCallBack) then
+    FCallBack(FService.mtClientes);
+  self.owner.removecomponent(self);
+  self.disposeOf;
 end;
 
 end.
