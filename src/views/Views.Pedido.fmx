@@ -101,7 +101,7 @@ inherited FrmPedido: TFrmPedido
               WrapMode = Fit
             end
           end
-          object btnBtnAdicionarVenda: TButton
+          object btnAdicionarVenda: TButton
             Anchors = [akRight, akBottom]
             StyledSettings = [Style, FontColor]
             Position.X = 280.000000000000000000
@@ -112,7 +112,7 @@ inherited FrmPedido: TFrmPedido
             StyleLookup = 'BlueRoundButton'
             TextSettings.Font.Family = 'Roboto'
             TextSettings.Font.Size = 18.000000000000000000
-            OnClick = btnBtnAdicionarVendaClick
+            OnClick = btnAdicionarVendaClick
             object imgAdicionarVenda: TPath
               Align = Center
               Data.Path = {

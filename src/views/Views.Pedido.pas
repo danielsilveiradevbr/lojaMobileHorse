@@ -16,7 +16,7 @@ type
     TabItemCadastro: TTabItem;
     retContentCadastro: TRectangle;
     retContentConsulta: TRectangle;
-    btnBtnAdicionarVenda: TButton;
+    btnAdicionarVenda: TButton;
     imgAdicionarVenda: TPath;
     vsbPedidos: TVertScrollBox;
     lytNenhumaVenda: TLayout;
@@ -39,7 +39,7 @@ type
     txtTotal: TLabel;
     btnConfirmar: TButton;
     Line1: TLine;
-    procedure btnBtnAdicionarVendaClick(Sender: TObject);
+    procedure btnAdicionarVendaClick(Sender: TObject);
     procedure btnVoltarClick(Sender: TObject);
     procedure btnBuscaClienteClick(Sender: TObject);
   private
@@ -61,7 +61,7 @@ uses Providers.Frames.Pedido, Providers.Aguarde, Views.Consulta.Cliente;
 
 { TFrmPedido }
 
-procedure TFrmPedido.btnBtnAdicionarVendaClick(Sender: TObject);
+procedure TFrmPedido.btnAdicionarVendaClick(Sender: TObject);
 begin
   inherited;
   NovaVenda;
@@ -87,6 +87,7 @@ constructor TFrmPedido.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FService := TServicePedido.Create(self);
+  btnConfirmar.Visible := false;
 end;
 
 procedure TFrmPedido.DesignPedidos;
@@ -154,7 +155,10 @@ end;
 
 procedure TFrmPedido.OnSelectCliente(const ADataSet: TDataSet);
 begin
+  FService.InicializatVenda(ADataSet.FieldByName('ID').AsString);
   txtNomeCliente.text := ADataset.fieldByName('nome').asString;
+  btnAdicionarVenda.Visible := true;
+  btnConfirmar.Visible := true;
 end;
 
 end.
