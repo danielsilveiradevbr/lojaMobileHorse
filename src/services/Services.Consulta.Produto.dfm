@@ -1,6 +1,5 @@
-inherited ServiceConsultaCliente: TServiceConsultaCliente
-  OldCreateOrder = True
-  object mtClientes: TFDMemTable
+inherited ServiceConsultaProduto: TServiceConsultaProduto
+  object mtProdutos: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
@@ -10,19 +9,33 @@ inherited ServiceConsultaCliente: TServiceConsultaCliente
     UpdateOptions.AutoCommitUpdates = True
     Left = 104
     Top = 40
-    object mtClientesid: TLargeintField
+    object mtProdutosid: TLargeintField
+      AutoGenerateValue = arAutoInc
       FieldName = 'id'
       Origin = 'id'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      ReadOnly = True
     end
-    object mtClientesnome: TWideStringField
+    object mtProdutosnome: TWideStringField
       FieldName = 'nome'
       Origin = 'nome'
       Size = 60
     end
-    object mtClientesstatus: TSmallintField
+    object mtProdutosvalor: TFMTBCDField
+      FieldName = 'valor'
+      Origin = 'valor'
+      Precision = 20
+      Size = 4
+    end
+    object mtProdutosstatus: TSmallintField
       FieldName = 'status'
       Origin = 'status'
+    end
+    object mtProdutosestoque: TFMTBCDField
+      FieldName = 'estoque'
+      Origin = 'estoque'
+      Precision = 20
+      Size = 4
     end
   end
 end

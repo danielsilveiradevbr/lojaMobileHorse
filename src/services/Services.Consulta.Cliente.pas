@@ -34,7 +34,6 @@ procedure TServiceConsultaCliente.ListarClientes(const ANome: String);
 begin
   if not mtClientes.active then
     mtClientes.Open;
-  mtClientes.EmptyDataSet;
   var LResponse := TRequest
                    .New
                    .BaseURL('http://localhost:9000')

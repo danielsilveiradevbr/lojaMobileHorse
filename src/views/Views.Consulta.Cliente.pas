@@ -10,7 +10,7 @@ uses
   System.generics.collections, Providers.Frames.List, Providers.Callback;
 
 type
-  TFrameConsutaCliente = class(TFrameBaseView)
+  TFrameConsultaCliente = class(TFrameBaseView)
     retHeaderCliente: TRectangle;
     btnVoltar: TButton;
     imgVoltar: TPath;
@@ -46,7 +46,7 @@ uses Providers.Aguarde;
 
 { TFrameConsutaCliente }
 
-procedure TFrameConsutaCliente.btnBuscaClienteClick(Sender: TObject);
+procedure TFrameConsultaCliente.btnBuscaClienteClick(Sender: TObject);
 begin
   inherited;
   TAguarde.Aguardar(
@@ -63,21 +63,21 @@ begin
   );
 end;
 
-procedure TFrameConsutaCliente.btnVoltarClick(Sender: TObject);
+procedure TFrameConsultaCliente.btnVoltarClick(Sender: TObject);
 begin
   inherited;
   self.owner.removecomponent(self);
   self.disposeOf;
 end;
 
-constructor TFrameConsutaCliente.Create(AOwner: TComponent);
+constructor TFrameConsultaCliente.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FService := TServiceConsultaCliente.create(self);
   FListaFrames := TObjectList<TFrameList>.create;
 end;
 
-procedure TFrameConsutaCliente.DesignClientes;
+procedure TFrameConsultaCliente.DesignClientes;
 begin
   lytBuscaVazia.Visible := FService.mtClientes.isEmpty;
   vsbClientes.Visible := not FService.mtClientes.isEmpty;
@@ -104,14 +104,14 @@ begin
   end;
 end;
 
-destructor TFrameConsutaCliente.Destroy;
+destructor TFrameConsultaCliente.Destroy;
 begin
   FService.free;
   FListaFrames.free;
   inherited;
 end;
 
-procedure TFrameConsutaCliente.OnSelectCleint(const AValue: String);
+procedure TFrameConsultaCliente.OnSelectCleint(const AValue: String);
 begin
   FService.mtClientes.Locate('id', AValue, []);
   if assigned(FCallBack) then

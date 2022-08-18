@@ -6,7 +6,8 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   Providers.Frames.Base.View, FMX.Layouts, FMX.Objects,
-  FMX.Controls.Presentation, FMX.TabControl, Services.Pedido, Data.Db;
+  FMX.Controls.Presentation, FMX.TabControl, Services.Pedido, Data.Db,
+  Views.Consulta.Produto;
 
 type
   TFrmPedido = class(TFrameBaseView)
@@ -42,11 +43,13 @@ type
     procedure btnAdicionarVendaClick(Sender: TObject);
     procedure btnVoltarClick(Sender: TObject);
     procedure btnBuscaClienteClick(Sender: TObject);
+    procedure btnAdicionarProdutoClick(Sender: TObject);
   private
     FService: TServicePedido;
     procedure DesignPedidos;
     procedure NovaVenda;
     procedure OnSelectCliente(const ADataSet: TDataSet);
+    procedure OnSelectProduto(const ADataSet: TDataSet);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -61,6 +64,16 @@ uses Providers.Frames.Pedido, Providers.Aguarde, Views.Consulta.Cliente;
 
 { TFrmPedido }
 
+procedure TFrmPedido.btnAdicionarProdutoClick(Sender: TObject);
+begin
+  inherited;
+  var LFrame := TFrameConsultaProduto.create(self);
+  LFrame.align := TAlignLayout.Contents;
+ // LFrame.callBack := OnSelectProduto;
+  lytContent.addObject(LFrame);
+  LFrame.BringToFront;
+end;
+
 procedure TFrmPedido.btnAdicionarVendaClick(Sender: TObject);
 begin
   inherited;
@@ -70,7 +83,7 @@ end;
 procedure TFrmPedido.btnBuscaClienteClick(Sender: TObject);
 begin
   inherited;
-  var LFrame := TFrameConsutaCliente.create(self);
+  var LFrame := TFrameConsultaCliente.create(self);
   LFrame.align := TAlignLayout.Contents;
   LFrame.callBack := OnSelectCliente;
   lytContent.addObject(LFrame);
@@ -157,8 +170,13 @@ procedure TFrmPedido.OnSelectCliente(const ADataSet: TDataSet);
 begin
   FService.InicializatVenda(ADataSet.FieldByName('ID').AsString);
   txtNomeCliente.text := ADataset.fieldByName('nome').asString;
-  btnAdicionarVenda.Visible := true;
+  btnAdicionarProduto.Visible := true;
   btnConfirmar.Visible := true;
+end;
+
+procedure TFrmPedido.OnSelectProduto(const ADataSet: TDataSet);
+begin
+
 end;
 
 end.

@@ -1,4 +1,4 @@
-inherited FrameConsutaCliente: TFrameConsutaCliente
+inherited FrameConsultaCliente: TFrameConsultaCliente
   inherited lytContent: TLayout
     object retHeaderCliente: TRectangle
       Align = Top

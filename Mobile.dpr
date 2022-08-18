@@ -23,15 +23,19 @@ uses
   Providers.Frames.Pedido in 'src\providers\Providers.Frames.Pedido.pas' {FramePedido: TFrame},
   Providers.Aguarde in 'src\providers\aguarde\Providers.Aguarde.pas',
   Providers.Aguarde.Frame in 'src\providers\aguarde\Providers.Aguarde.Frame.pas' {FrameAguarde: TFrame},
-  Views.Consulta.Cliente in 'src\views\Views.Consulta.Cliente.pas' {FrameConsutaCliente: TFrame},
+  Views.Consulta.Cliente in 'src\views\Views.Consulta.Cliente.pas' {FrameConsultaCliente: TFrame},
   Services.Consulta.Cliente in 'src\services\Services.Consulta.Cliente.pas' {ServiceConsultaCliente: TDataModule},
   Providers.Frames.List in 'src\providers\frames\list\Providers.Frames.List.pas' {FrameList: TFrame},
-  Providers.Callback in 'src\providers\callback\Providers.Callback.pas';
+  Providers.Callback in 'src\providers\callback\Providers.Callback.pas',
+  Views.Consulta.Produto in 'src\views\Views.Consulta.Produto.pas' {FrameConsultaProduto: TFrame},
+  Services.Consulta.Produto in 'src\services\Services.Consulta.Produto.pas' {ServiceConsultaProduto: TDataModule},
+  Providers.Frames.List.Produto in 'src\providers\frames\list\Providers.Frames.List.Produto.pas' {FrameListProduto: TFrame};
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
+  Application.CreateForm(TServiceConsultaProduto, ServiceConsultaProduto);
   Application.Run;
 end.
