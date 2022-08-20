@@ -29,7 +29,8 @@ uses
   Providers.Callback in 'src\providers\callback\Providers.Callback.pas',
   Views.Consulta.Produto in 'src\views\Views.Consulta.Produto.pas' {FrameConsultaProduto: TFrame},
   Services.Consulta.Produto in 'src\services\Services.Consulta.Produto.pas' {ServiceConsultaProduto: TDataModule},
-  Providers.Frames.List.Produto in 'src\providers\frames\list\Providers.Frames.List.Produto.pas' {FrameListProduto: TFrame};
+  Providers.Frames.List.Produto in 'src\providers\frames\list\Providers.Frames.List.Produto.pas' {FrameListProduto: TFrame},
+  Providers.Frames.Pedido.Item in 'src\providers\frames\Providers.Frames.Pedido.Item.pas' {FramePedidoItem: TFrame};
 
 {$R *.res}
 

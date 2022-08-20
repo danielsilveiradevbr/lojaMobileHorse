@@ -60,7 +60,8 @@ implementation
 
 {$R *.fmx}
 
-uses Providers.Frames.Pedido, Providers.Aguarde, Views.Consulta.Cliente;
+uses Providers.Frames.Pedido, Providers.Aguarde, Views.Consulta.Cliente,
+  Providers.Frames.Pedido.Item;
 
 { TFrmPedido }
 
@@ -69,7 +70,7 @@ begin
   inherited;
   var LFrame := TFrameConsultaProduto.create(self);
   LFrame.align := TAlignLayout.Contents;
- // LFrame.callBack := OnSelectProduto;
+  LFrame.callBack := OnSelectProduto;
   lytContent.addObject(LFrame);
   LFrame.BringToFront;
 end;
@@ -176,7 +177,18 @@ end;
 
 procedure TFrmPedido.OnSelectProduto(const ADataSet: TDataSet);
 begin
-
+  vsbProdutos.BeginUpdate;
+  try
+    var LFrame := TFramePedidoItem.create(vsbProdutos);
+    LFrame.Align := TAlignLayout.top;
+    //LFrame.txtQtd.text :=
+    LFrame.txtDescricao.text := ADataSet.FieldByName('nome').AsString;
+    LFrame.txtValor.text := formatFloat('R$ ,0.00', ADataSet.FieldByName('valor').AsCurrency);
+    LFrame.Name := LFrame.Classname + vsbProdutos.Content.controlsCount.ToString;
+    LFrame.Parent := vsbProdutos;
+  finally
+    vsbProdutos.EndUpdate;
+  end;
 end;
 
 end.
