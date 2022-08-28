@@ -177,18 +177,20 @@ end;
 
 procedure TFrmPedido.OnSelectProduto(const ADataSet: TDataSet);
 begin
+  Fservice.AdicionarProduto(ADataSet);
   vsbProdutos.BeginUpdate;
   try
     var LFrame := TFramePedidoItem.create(vsbProdutos);
     LFrame.Align := TAlignLayout.top;
-    //LFrame.txtQtd.text :=
-    LFrame.txtDescricao.text := ADataSet.FieldByName('nome').AsString;
-    LFrame.txtValor.text := formatFloat('R$ ,0.00', ADataSet.FieldByName('valor').AsCurrency);
+    LFrame.txtQtd.text := Fservice.mtItensquantidade.AsString;
+    LFrame.txtDescricao.text := Fservice.mtItensnome_produto.AsString;
+    LFrame.txtValor.text := formatFloat('R$ ,0.00', Fservice.mtItensTotal.AsCurrency);
     LFrame.Name := LFrame.Classname + vsbProdutos.Content.controlsCount.ToString;
     LFrame.Parent := vsbProdutos;
   finally
     vsbProdutos.EndUpdate;
   end;
+  txtTotal.text := formatFloat('R$ ,0.00', Fservice.mtcadastroTotal.AsCurrency);
 end;
 
 end.

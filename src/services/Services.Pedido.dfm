@@ -36,6 +36,9 @@ inherited ServicePedido: TServicePedido
       Origin = 'nome_cliente'
       Size = 60
     end
+    object mtPedidostotal: TCurrencyField
+      FieldName = 'total'
+    end
   end
   object mtCadastro: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -69,6 +72,9 @@ inherited ServicePedido: TServicePedido
       FieldName = 'nome_cliente'
       Origin = 'nome_cliente'
       Size = 60
+    end
+    object mtCadastrototal: TCurrencyField
+      FieldName = 'total'
     end
   end
   object mtItens: TFDMemTable
@@ -113,6 +119,9 @@ inherited ServicePedido: TServicePedido
       FieldName = 'nome_produto'
       Origin = 'nome_produto'
       Size = 60
+    end
+    object mtItenstotal: TCurrencyField
+      FieldName = 'total'
     end
   end
 end

@@ -29,12 +29,16 @@ type
     mtItensvalor: TFMTBCDField;
     mtItensquantidade: TFMTBCDField;
     mtItensnome_produto: TWideStringField;
+    mtCadastrototal: TCurrencyField;
+    mtItenstotal: TCurrencyField;
+    mtPedidostotal: TCurrencyField;
     procedure DataModuleCreate(Sender: TObject);
   private
-    { Private declarations }
+    procedure AtualizarTotal();
   public
     procedure ListarPedidosUsuario;
     procedure InicializatVenda(const AIDCliente: String);
+    procedure AdicionarProduto(const ADataSet: TDataSet);
   end;
 
 
@@ -45,6 +49,58 @@ uses DataSet.Serialize, System.JSON;
 {%CLASSGROUP 'FMX.Controls.TControl'}
 
 {$R *.dfm}
+
+procedure TServicePedido.AdicionarProduto(const ADataSet: TDataSet);
+begin
+  if mtItens.locate('id_produto', ADataset.FieldByName('id').asString, []) then
+    mtItens.edit
+  else
+    mtItens.append;
+  mtItensid_pedido.AsLargeInt := mtCadastroid.AsLargeInt;
+  mtItensid_produto.AsLargeInt := ADataSet.fieldbyName('id').AsLargeInt;
+  mtItensvalor.AsCurrency := ADataSet.FieldByName('valor').AsCurrency;
+  mtItensquantidade.AsInteger := mtItensquantidade.AsInteger + 1;
+  mtItensnome_produto.AsString := ADataSet.FieldByName('nome').AsString;
+  mtItenstotal.AsCurrency := mtItensvalor.AsCurrency * mtItensquantidade.AsInteger;
+  mtItens.post;
+  var LRequest := TRequest
+                  .new
+                  .BaseURL('http://localhost:9000')
+                  .Resource('pedidos/' + mtCadastroid.asString + '/itens')
+                  .AddBody(mtItens.tojsonobject);
+  if mtItensid.AsLargeInt > 0 then
+  begin
+    var LResponse := LRequest.ResourceSuffix(mtItensid.asString).put;
+    if LResponse.StatusCode <> 204 then
+      raise Exception.create(LResponse.Content);
+  end
+  else
+  begin
+    var LResponse := LRequest.post;
+    if LResponse.StatusCode <> 200 then
+      raise Exception.create(LResponse.Content);
+    mtItens.MergeFromJSONObject(TJSonObject(LResponse.JsonValue), false);
+  end;
+  AtualizarTotal;
+end;
+
+procedure TServicePedido.AtualizarTotal;
+begin
+  var Lid := mtItensId.AsLargeInt;
+  try
+    mtCadastro.Edit;
+    mtCadastrototal.asCurrency := 0.00;
+    mtItens.First;
+    while not mtItens.eof do
+    begin
+      mtCadastrototal.asCurrency := mtCadastrototal.asCurrency + mtItenstotal.asCurrency;
+      mtItens.next;
+    end;
+    mtCadastro.post;
+  finally
+    mtItens.locate('id', Lid, []);
+  end;
+end;
 
 procedure TServicePedido.DataModuleCreate(Sender: TObject);
 begin
