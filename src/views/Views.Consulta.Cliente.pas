@@ -31,7 +31,7 @@ type
     FListaFrames: TObjectList<TFrameList>;
     FCallBack: TCallBackDataSet;
     procedure DesignClientes;
-    procedure OnSelectCleint(const AValue: String);
+    procedure OnSelectClient(const AValue: String);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -95,7 +95,7 @@ begin
       LFrame.lblDescricao.text := FService.mtClientesnome.AsString;
       LFrame.Name := LFrame.classname + vsbClientes.content.controlsCount.toString;
       LFrame.parent := vsbClientes;
-      LFrame.CallBack := OnSelectCleint;
+      LFrame.CallBack := OnSelectClient;
       FListaFrames.add(LFrame);
       FService.mtClientes.next;
     end;
@@ -111,7 +111,7 @@ begin
   inherited;
 end;
 
-procedure TFrameConsultaCliente.OnSelectCleint(const AValue: String);
+procedure TFrameConsultaCliente.OnSelectClient(const AValue: String);
 begin
   FService.mtClientes.Locate('id', AValue, []);
   if assigned(FCallBack) then

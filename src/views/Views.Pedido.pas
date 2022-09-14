@@ -7,7 +7,7 @@ uses
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   Providers.Frames.Base.View, FMX.Layouts, FMX.Objects,
   FMX.Controls.Presentation, FMX.TabControl, Services.Pedido, Data.Db,
-  Views.Consulta.Produto;
+  Views.Consulta.Produto, Providers.Frames.Pedido, Providers.Frames.Pedido.Item;
 
 type
   TFrmPedido = class(TFrameBaseView)
@@ -50,6 +50,7 @@ type
     procedure NovaVenda;
     procedure OnSelectCliente(const ADataSet: TDataSet);
     procedure OnSelectProduto(const ADataSet: TDataSet);
+    function GetFrameProduto(const AIdProduto: String): TFramePedidoItem;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -60,8 +61,7 @@ implementation
 
 {$R *.fmx}
 
-uses Providers.Frames.Pedido, Providers.Aguarde, Views.Consulta.Cliente,
-  Providers.Frames.Pedido.Item;
+uses Providers.Aguarde, Views.Consulta.Cliente;
 
 { TFrmPedido }
 
@@ -180,17 +180,31 @@ begin
   Fservice.AdicionarProduto(ADataSet);
   vsbProdutos.BeginUpdate;
   try
-    var LFrame := TFramePedidoItem.create(vsbProdutos);
+    var LFrame := GetFrameProduto(FService.mtItensid_produto.AsString);
     LFrame.Align := TAlignLayout.top;
+    LFrame.Identify := FService.mtItensid.AsString;
+    LFrame.IdProduto := FService.mtItensid_produto.AsString;
     LFrame.txtQtd.text := Fservice.mtItensquantidade.AsString;
     LFrame.txtDescricao.text := Fservice.mtItensnome_produto.AsString;
     LFrame.txtValor.text := formatFloat('R$ ,0.00', Fservice.mtItensTotal.AsCurrency);
-    LFrame.Name := LFrame.Classname + vsbProdutos.Content.controlsCount.ToString;
     LFrame.Parent := vsbProdutos;
   finally
     vsbProdutos.EndUpdate;
   end;
   txtTotal.text := formatFloat('R$ ,0.00', Fservice.mtcadastroTotal.AsCurrency);
+end;
+
+function TFrmPedido.GetFrameProduto(const AIdProduto: String): TFramePedidoItem;
+begin
+  for var Ind := 0 to pred(vsbProdutos.content.controlsCount) do
+  begin
+    if not vsbProdutos.content.controls[ind].inheritsFrom(TFramePedidoItem) then
+      continue;
+    if TFramePedidoItem(vsbProdutos.content.controls[ind]).idProduto = AIdProduto then
+      exit(TFramePedidoItem(vsbProdutos.content.controls[ind]));
+  end;
+  result := TFramePedidoItem.create(vsbProdutos);
+  result := result.Classname + vsbProdutos.Content.controlsCount.ToString;
 end;
 
 end.

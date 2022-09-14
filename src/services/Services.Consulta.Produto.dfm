@@ -1,4 +1,5 @@
 inherited ServiceConsultaProduto: TServiceConsultaProduto
+  OldCreateOrder = True
   object mtProdutos: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -14,7 +15,6 @@ inherited ServiceConsultaProduto: TServiceConsultaProduto
       FieldName = 'id'
       Origin = 'id'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-      ReadOnly = True
     end
     object mtProdutosnome: TWideStringField
       FieldName = 'nome'

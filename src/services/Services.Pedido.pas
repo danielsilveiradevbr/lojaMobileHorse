@@ -51,6 +51,8 @@ uses DataSet.Serialize, System.JSON;
 {$R *.dfm}
 
 procedure TServicePedido.AdicionarProduto(const ADataSet: TDataSet);
+var
+  LResponse: IResponse;
 begin
   if mtItens.locate('id_produto', ADataset.FieldByName('id').asString, []) then
     mtItens.edit
@@ -70,14 +72,14 @@ begin
                   .AddBody(mtItens.tojsonobject);
   if mtItensid.AsLargeInt > 0 then
   begin
-    var LResponse := LRequest.ResourceSuffix(mtItensid.asString).put;
+    LResponse := LRequest.ResourceSuffix(mtItensid.asString).put;
     if LResponse.StatusCode <> 204 then
       raise Exception.create(LResponse.Content);
   end
   else
   begin
-    var LResponse := LRequest.post;
-    if LResponse.StatusCode <> 200 then
+    LResponse := LRequest.post;
+    if LResponse.StatusCode <> 201 then
       raise Exception.create(LResponse.Content);
     mtItens.MergeFromJSONObject(TJSonObject(LResponse.JsonValue), false);
   end;
