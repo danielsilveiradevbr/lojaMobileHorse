@@ -40,6 +40,7 @@ type
     txtTotal: TLabel;
     btnConfirmar: TButton;
     Line1: TLine;
+    retOffSet: TRectangle;
     procedure btnAdicionarVendaClick(Sender: TObject);
     procedure btnVoltarClick(Sender: TObject);
     procedure btnBuscaClienteClick(Sender: TObject);
@@ -53,6 +54,7 @@ type
     function GetFrameProduto(const AIdProduto: String): TFramePedidoItem;
     procedure OnDeleteItem(ASender: TObject);
     procedure AtualizarTotal;
+    procedure OnDeletePedido(ASender: TObject);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -121,21 +123,26 @@ begin
     exit;
   vsbPedidos.BeginUpdate;
   try
-    for var ind := Pred(vsbPedidos.Content.controlsCount) downto 0 do
-      vsbPedidos.Controls.items[ind].disposeOf;
+    for var ind := Pred(vsbPedidos.Content.controlsCount) downto 0 do begin
+      if vsbPedidos.Content.Controls.items[ind] is TFramePedido then
+        vsbPedidos.Controls.items[ind].disposeOf;
+    end;
     FSErvice.mtPedidos.first;
     while not FSErvice.mtPedidos.eof do
     begin
       LFramePedido := TFramePedido.create(vsbPedidos);
       LFramePedido.name := LFramePedido.className + '_' + FService.mtPedidosid.asString;
+      LFramePedido.Identify := FService.mtPedidosid.asString;
       LFramePedido.align := TAlignLayout.top;
       LFramePedido.txtNumero.text := FService.mtPedidosid.asString;
       LFramePedido.txtDataVenda.text := formatDateTime('dd/mm/yyyy', FService.mtPedidosData.asDateTime);
- //     LFramePedido.txtValorVenda.text := formatFloat('R$ ,0.00;', FService.mtPedidostotal.asFloat);
+      LFramePedido.txtValorVenda.text := formatFloat('R$ ,0.00;', FService.mtPedidostotal.asFloat);
       LFramePedido.txtNomeCliente.text := FService.mtPedidosnome_cliente.asString;
       LFramePedido.parent := vsbPedidos;
+      LFramePedido.OnDeletePedido := Self.OnDeletePedido;
       FSErvice.mtPedidos.next;
     end;
+    retOffSet.Position.x := vsbPedidos.Content.controlsCount * 130 + retOffSet.Height;
   finally
 
   end;
@@ -181,6 +188,14 @@ begin
   FService.DeletarItem(TFramePedidoItem(ASender).Identify);
   TFramePedidoItem(ASender).DisposeOf;
   AtualizarTotal;
+end;
+
+procedure TFrmPedido.OnDeletePedido(ASender: TObject);
+begin
+  if not ASender.InheritsFrom(TFramePedido) then
+    exit;
+  FService.DeletarPedido(TFramePedido(Asender).Identify);
+  TFramePedido(Asender).DisposeOf;
 end;
 
 procedure TFrmPedido.OnSelectCliente(const ADataSet: TDataSet);

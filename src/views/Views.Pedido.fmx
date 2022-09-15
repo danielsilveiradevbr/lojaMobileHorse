@@ -13,7 +13,7 @@ inherited FrmPedido: TFrmPedido
       Size.Width = 350.000000000000000000
       Size.Height = 500.000000000000000000
       Size.PlatformDefault = False
-      TabIndex = 1
+      TabIndex = 0
       TabPosition = None
       Sizes = (
         350s
@@ -24,7 +24,7 @@ inherited FrmPedido: TFrmPedido
         CustomIcon = <
           item
           end>
-        IsSelected = False
+        IsSelected = True
         Size.Width = 8.000000000000000000
         Size.Height = 8.000000000000000000
         Size.PlatformDefault = False
@@ -47,6 +47,14 @@ inherited FrmPedido: TFrmPedido
             Size.PlatformDefault = False
             Viewport.Width = 350.000000000000000000
             Viewport.Height = 500.000000000000000000
+            object retOffSet: TRectangle
+              Align = Top
+              Fill.Color = xFFF1F3F6
+              Size.Width = 350.000000000000000000
+              Size.Height = 80.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+            end
           end
           object lytNenhumaVenda: TLayout
             Align = Center
@@ -143,7 +151,7 @@ inherited FrmPedido: TFrmPedido
         CustomIcon = <
           item
           end>
-        IsSelected = True
+        IsSelected = False
         Size.Width = 8.000000000000000000
         Size.Height = 8.000000000000000000
         Size.PlatformDefault = False

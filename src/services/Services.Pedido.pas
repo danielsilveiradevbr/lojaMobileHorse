@@ -40,6 +40,7 @@ type
     procedure InicializatVenda(const AIDCliente: String);
     procedure AdicionarProduto(const ADataSet: TDataSet);
     procedure DeletarItem(const AId: String);
+    procedure DeletarPedido(const AId: String);
   end;
 
 
@@ -125,6 +126,19 @@ begin
     raise Exception.Create(LResponse.Content);
   mtItens.delete;
   AtualizarTotal;
+end;
+
+procedure TServicePedido.DeletarPedido(const AId: String);
+begin
+  var LResponse := TRequest
+               .new
+                .BaseURL('http://localhost:9000')
+                .Resource('pedidos')
+                .ResourceSuffix(AId)
+                .Delete;
+  if LResponse.StatusCode <> 204 then
+    raise Exception.Create(LResponse.Content);
+  mtPedidos.delete;
 end;
 
 procedure TServicePedido.InicializatVenda(const AIDCliente: String);

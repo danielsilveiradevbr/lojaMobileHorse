@@ -30,14 +30,24 @@ type
     Path2: TPath;
     txtValorVenda: TLabel;
     lineSeparator: TLine;
+    procedure btExcluirClick(Sender: TObject);
   private
-    { Private declarations }
+    FOnDeletePedido: TNotifyEvent;
+    FIdentify: String;
   public
-    { Public declarations }
+    property OnDeletePedido: TNotifyEvent read FOnDeletePedido write FOnDeletePedido;
+    property Identify: String read FIdentify write FIdentify;
   end;
 
 implementation
 
 {$R *.fmx}
+
+procedure TFramePedido.btExcluirClick(Sender: TObject);
+begin
+  inherited;
+  if Assigned(FOnDeletePedido) then
+    FOnDeletePedido(self);
+end;
 
 end.
