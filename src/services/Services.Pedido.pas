@@ -39,6 +39,7 @@ type
     procedure ListarPedidosUsuario;
     procedure InicializatVenda(const AIDCliente: String);
     procedure AdicionarProduto(const ADataSet: TDataSet);
+    procedure DeletarItem(const AId: String);
   end;
 
 
@@ -108,6 +109,22 @@ procedure TServicePedido.DataModuleCreate(Sender: TObject);
 begin
   inherited;
   mtPedidos.open;
+end;
+
+procedure TServicePedido.DeletarItem(const AId: String);
+begin
+  if not mtItens.Locate('id', AId, []) then
+    raise Exception.Create('Item não localizado');
+  var LResponse := TRequest
+               .new
+                .BaseURL('http://localhost:9000')
+                .Resource('pedidos/' + mtCadastroid.asString + '/itens')
+                .ResourceSuffix(AId)
+                .Delete;
+  if LResponse.StatusCode <> 204 then
+    raise Exception.Create(LResponse.Content);
+  mtItens.delete;
+  AtualizarTotal;
 end;
 
 procedure TServicePedido.InicializatVenda(const AIDCliente: String);

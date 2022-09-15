@@ -92,7 +92,6 @@ inherited ServicePedido: TServicePedido
       FieldName = 'id'
       Origin = 'id'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-      ReadOnly = True
     end
     object mtItensid_pedido: TLargeintField
       FieldName = 'id_pedido'

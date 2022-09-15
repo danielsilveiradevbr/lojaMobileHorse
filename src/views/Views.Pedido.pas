@@ -51,6 +51,8 @@ type
     procedure OnSelectCliente(const ADataSet: TDataSet);
     procedure OnSelectProduto(const ADataSet: TDataSet);
     function GetFrameProduto(const AIdProduto: String): TFramePedidoItem;
+    procedure OnDeleteItem(ASender: TObject);
+    procedure AtualizarTotal;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -64,6 +66,11 @@ implementation
 uses Providers.Aguarde, Views.Consulta.Cliente;
 
 { TFrmPedido }
+
+procedure TFrmPedido.AtualizarTotal;
+begin
+  txtTotal.text := formatFloat('R$ ,0.00', Fservice.mtcadastroTotal.AsCurrency);
+end;
 
 procedure TFrmPedido.btnAdicionarProdutoClick(Sender: TObject);
 begin
@@ -167,6 +174,15 @@ begin
   TabControlPedido.Next();
 end;
 
+procedure TFrmPedido.OnDeleteItem(ASender: TObject);
+begin
+  if not ASender.InheritsFrom(TFramePedidoItem) then
+    exit;
+  FService.DeletarItem(TFramePedidoItem(ASender).Identify);
+  TFramePedidoItem(ASender).DisposeOf;
+  AtualizarTotal;
+end;
+
 procedure TFrmPedido.OnSelectCliente(const ADataSet: TDataSet);
 begin
   FService.InicializatVenda(ADataSet.FieldByName('ID').AsString);
@@ -191,7 +207,7 @@ begin
   finally
     vsbProdutos.EndUpdate;
   end;
-  txtTotal.text := formatFloat('R$ ,0.00', Fservice.mtcadastroTotal.AsCurrency);
+  AtualizarTotal;
 end;
 
 function TFrmPedido.GetFrameProduto(const AIdProduto: String): TFramePedidoItem;
@@ -204,7 +220,8 @@ begin
       exit(TFramePedidoItem(vsbProdutos.content.controls[ind]));
   end;
   result := TFramePedidoItem.create(vsbProdutos);
-  result := result.Classname + vsbProdutos.Content.controlsCount.ToString;
+  result.name := result.Classname + vsbProdutos.Content.controlsCount.ToString;
+  result.OnDeleteItem := Self.OnDeleteItem;
 end;
 
 end.

@@ -102,6 +102,7 @@ inherited FramePedidoItem: TFramePedidoItem
       Size.Height = 44.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = 'TransparentRoundButton'
+      OnClick = btnExcluirClick
       object imgExcluir: TPath
         Align = Center
         Data.Path = {

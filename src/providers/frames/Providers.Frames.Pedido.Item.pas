@@ -18,16 +18,26 @@ type
     imgEditar: TPath;
     btnExcluir: TButton;
     imgExcluir: TPath;
+    procedure btnExcluirClick(Sender: TObject);
   private
     FIdentify: String;
     FIdProduto: String;
+    FOnDeleteItem: TNotifyEvent;
   public
     property Identify: String read FIdentify write FIdentify;
     property IdProduto: String read FIdProduto write FIdProduto;
+    property OnDeleteItem: TNotifyEvent read FOnDeleteItem write FOnDeleteItem;
   end;
 
 implementation
 
 {$R *.fmx}
+
+procedure TFramePedidoItem.btnExcluirClick(Sender: TObject);
+begin
+  inherited;
+  if Assigned(FOnDeleteItem) then
+    FOnDeleteItem(self);
+end;
 
 end.
