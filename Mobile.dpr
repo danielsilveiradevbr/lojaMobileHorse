@@ -30,7 +30,9 @@ uses
   Views.Consulta.Produto in 'src\views\Views.Consulta.Produto.pas' {FrameConsultaProduto: TFrame},
   Services.Consulta.Produto in 'src\services\Services.Consulta.Produto.pas' {ServiceConsultaProduto: TDataModule},
   Providers.Frames.List.Produto in 'src\providers\frames\list\Providers.Frames.List.Produto.pas' {FrameListProduto: TFrame},
-  Providers.Frames.Pedido.Item in 'src\providers\frames\Providers.Frames.Pedido.Item.pas' {FramePedidoItem: TFrame};
+  Providers.Frames.Pedido.Item in 'src\providers\frames\Providers.Frames.Pedido.Item.pas' {FramePedidoItem: TFrame},
+  Providers.Dialogs.Views.Input in 'src\providers\dialogs\views\Providers.Dialogs.Views.Input.pas' {frmDialogInput: TFrame},
+  Providers.Dialogs.Input in 'src\providers\dialogs\Providers.Dialogs.Input.pas';
 
 {$R *.res}
 

@@ -53,6 +53,7 @@ type
     procedure OnSelectProduto(const ADataSet: TDataSet);
     function GetFrameProduto(const AIdProduto: String): TFramePedidoItem;
     procedure OnDeleteItem(ASender: TObject);
+    procedure OnEditItem(ASender: TObject);
     procedure AtualizarTotal;
     procedure OnDeletePedido(ASender: TObject);
   public
@@ -198,6 +199,13 @@ begin
   TFramePedido(Asender).DisposeOf;
 end;
 
+procedure TFrmPedido.OnEditItem(ASender: TObject);
+begin
+  if not ASender.InheritsFrom(TFramePedidoItem) then
+    exit;
+  ShowMessage('Quantidade alterada com sucesso!');
+end;
+
 procedure TFrmPedido.OnSelectCliente(const ADataSet: TDataSet);
 begin
   FService.InicializatVenda(ADataSet.FieldByName('ID').AsString);
@@ -237,6 +245,7 @@ begin
   result := TFramePedidoItem.create(vsbProdutos);
   result.name := result.Classname + vsbProdutos.Content.controlsCount.ToString;
   result.OnDeleteItem := Self.OnDeleteItem;
+  result.OnEditItem := self.OnEditItem;
 end;
 
 end.

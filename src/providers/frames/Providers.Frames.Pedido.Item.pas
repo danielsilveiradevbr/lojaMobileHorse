@@ -19,19 +19,40 @@ type
     btnExcluir: TButton;
     imgExcluir: TPath;
     procedure btnExcluirClick(Sender: TObject);
+    procedure btnEditarClick(Sender: TObject);
   private
     FIdentify: String;
     FIdProduto: String;
-    FOnDeleteItem: TNotifyEvent;
+    FOnDeleteItem, FOnEditItem: TNotifyEvent;
   public
     property Identify: String read FIdentify write FIdentify;
     property IdProduto: String read FIdProduto write FIdProduto;
     property OnDeleteItem: TNotifyEvent read FOnDeleteItem write FOnDeleteItem;
+    property OnEditItem: TNotifyEvent read FOnEditItem write FOnEditItem;
   end;
 
 implementation
 
 {$R *.fmx}
+
+uses Providers.Dialogs.Input;
+
+procedure TFramePedidoItem.btnEditarClick(Sender: TObject);
+begin
+  inherited;
+  TDialogInput.show('Quantidade', txtQtd.text,
+     procedure(const AResponse: string)
+     begin
+       if AResponse.trim.isEmpty or (strToIntDef(AResponse, 0) <= 0) then
+         exit;
+       txtQtd.text := AResponse;
+       if assigned(FOnEditItem) then
+         FOnEditItem(self);
+     end
+  );
+  if Assigned(FOnEditItem) then
+    FOnEditItem(self);
+end;
 
 procedure TFramePedidoItem.btnExcluirClick(Sender: TObject);
 begin
