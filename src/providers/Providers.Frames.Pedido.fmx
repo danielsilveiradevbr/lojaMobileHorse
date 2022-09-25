@@ -84,6 +84,7 @@ inherited FramePedido: TFramePedido
       Size.Height = 36.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = 'TransparentRoundButton'
+      OnClick = btnEditarClick
       object imgEditar: TPath
         Align = Center
         Data.Path = {

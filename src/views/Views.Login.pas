@@ -37,7 +37,7 @@ implementation
 
 {$R *.fmx}
 
-uses Views.Menu, Providers.Aguarde;
+uses Views.Menu, Providers.Aguarde, Providers.Dialogs.Error;
 
 
 { TfrmLogin }
@@ -60,7 +60,11 @@ begin
         goToMenu();
       except
         on E:exception do
-          showMessage(E.message);
+           TThread.synchronize(TThread.current,
+          procedure
+          begin
+            TDialogError.Show(E.message);
+          end);
       end;
     end
   );

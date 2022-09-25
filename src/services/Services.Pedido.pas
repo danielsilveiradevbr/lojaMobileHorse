@@ -36,6 +36,7 @@ type
     procedure mtItensBeforePost(DataSet: TDataSet);
   private
     procedure AtualizarTotal();
+    procedure CarregarItensPedido(const AId: String);
   public
     procedure ListarPedidosUsuario;
     procedure InicializatVenda(const AIDCliente: String);
@@ -44,6 +45,7 @@ type
     procedure DeletarPedido(const AId: String);
     procedure AlterarQuantidadeItem(const AQuantidade, AId: String);
     procedure NovaVenda;
+    procedure CarregarPedido(const AId: String);
   end;
 
 
@@ -127,6 +129,39 @@ begin
   finally
     mtItens.locate('id', Lid, []);
   end;
+end;
+
+procedure TServicePedido.CarregarPedido(const AId: String);
+begin
+  var LResponse := TRequest
+                   .new
+                   .baseUrl('http://localhost:9000')
+                   .resource('pedidos')
+                   .ResourceSuffix(AId)
+                   .Get;
+  if LResponse.StatusCode <> 200 then
+    raise Exception.Create(LResponse.Content);
+  if not mtCadastro.Active then
+    mtCadastro.Open;
+  mtCadastro.EmptyDataSet;
+  mtCadastro.LoadFromJSON(TJSONObject(LResponse.JSONValue), false); //quem vai dest o json é o lresp
+  CarregarItensPedido(AID);
+  AtualizarTotal;
+end;
+
+procedure TServicePedido.CarregarItensPedido(const AId: String);
+begin
+  var LResponse := TRequest
+                   .new
+                   .baseUrl('http://localhost:9000')
+                   .resource('pedidos/' + AId + '/itens')
+                   .Get;
+  if LResponse.StatusCode <> 200 then
+    raise Exception.Create(LResponse.Content);
+  if not mtItens.Active then
+    mtItens.Open;
+  mtItens.EmptyDataSet;
+  mtItens.LoadFromJSON(LResponse.JSONValue.GetValue<TJSONArray>('data'), false); //quem vai dest o json é o lresp
 end;
 
 procedure TServicePedido.DataModuleCreate(Sender: TObject);

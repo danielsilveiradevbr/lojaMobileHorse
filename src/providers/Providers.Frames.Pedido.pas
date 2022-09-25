@@ -31,11 +31,13 @@ type
     txtValorVenda: TLabel;
     lineSeparator: TLine;
     procedure btExcluirClick(Sender: TObject);
+    procedure btnEditarClick(Sender: TObject);
   private
-    FOnDeletePedido: TNotifyEvent;
+    FOnDeletePedido, FOnEditPedido: TNotifyEvent;
     FIdentify: String;
   public
     property OnDeletePedido: TNotifyEvent read FOnDeletePedido write FOnDeletePedido;
+    property OnEditPedido: TNotifyEvent read FOnEditPedido write FOnEditPedido;
     property Identify: String read FIdentify write FIdentify;
   end;
 
@@ -48,6 +50,13 @@ begin
   inherited;
   if Assigned(FOnDeletePedido) then
     FOnDeletePedido(self);
+end;
+
+procedure TFramePedido.btnEditarClick(Sender: TObject);
+begin
+  inherited;
+  if Assigned(FOnEditPedido) then
+    FOnEditPedido(self);
 end;
 
 end.

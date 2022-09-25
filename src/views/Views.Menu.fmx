@@ -121,6 +121,7 @@ inherited FrmMenu: TFrmMenu
           Size.Height = 40.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'TransparentNormalButton'
+          OnClick = btnLogoutClick
           object imgLogout: TPath
             Align = Left
             Data.Path = {
@@ -237,6 +238,7 @@ inherited FrmMenu: TFrmMenu
           Size.Height = 40.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'TransparentNormalButton'
+          OnClick = btnHomeClick
           object imgHome: TPath
             Align = Left
             Data.Path = {

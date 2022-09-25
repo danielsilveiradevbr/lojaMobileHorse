@@ -367,6 +367,12 @@
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="src\providers\dialogs\Providers.Dialogs.Input.pas"/>
+        <DCCReference Include="src\providers\dialogs\views\Providers.Dialogs.Views.Error.pas">
+            <Form>frmDialogError</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\providers\dialogs\Providers.Dialogs.Error.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

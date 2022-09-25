@@ -48,6 +48,7 @@ type
     procedure btnConfirmarClick(Sender: TObject);
   private
     FService: TServicePedido;
+    FEInclusao: boolean;
     procedure DesignPedidos;
     procedure NovaVenda;
     procedure OnSelectCliente(const ADataSet: TDataSet);
@@ -57,7 +58,9 @@ type
     procedure OnEditItem(ASender: TObject);
     procedure AtualizarTotal;
     procedure OnDeletePedido(ASender: TObject);
+    procedure OnEditPedido(ASender: TObject);
     procedure ListarPedidos;
+    procedure DoAdicionarItem;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -113,7 +116,7 @@ end;
 procedure TFrmPedido.btnVoltarClick(Sender: TObject);
 begin
   inherited;
-  if FService.mtCadastro.Active and (FService.mtCadastroid.asLargeInt > 0) then
+  if FService.mtCadastro.Active and (FService.mtCadastroid.asLargeInt > 0) and FEInclusao then
     FService.DeletarPedido(FService.mtCadastroid.AsString);
   TabControlPedido.Previous();
 end;
@@ -152,6 +155,7 @@ begin
       LFramePedido.txtNomeCliente.text := FService.mtPedidosnome_cliente.asString;
       LFramePedido.parent := vsbPedidos;
       LFramePedido.OnDeletePedido := Self.OnDeletePedido;
+      LFramePedido.OnEditPedido := self.OnEditPedido;
       FSErvice.mtPedidos.next;
     end;
     //retOffSet.Position.x := vsbPedidos.Content.controlsCount * 130 + retOffSet.Height;
@@ -196,6 +200,7 @@ begin
     if vsbProdutos.Content.Controls.items[ind] is TFramePedidoItem then
       vsbProdutos.Content.Controls.items[ind].disposeOf;
   end;
+  FEInclusao := true;
   FService.NovaVenda;
   btnAdicionarProduto.Visible := false;
   txtNomeCliente.text := 'Nenhum cliente selecionado';
@@ -230,6 +235,35 @@ begin
   AtualizarTotal;
 end;
 
+procedure TFrmPedido.OnEditPedido(ASender: TObject);
+begin
+  if not ASender.InheritsFrom(TFramePedido) then
+    exit;
+  FService.CarregarPedido(TFramePedido(ASender).Identify);
+  txtNomeCliente.text := FService.mtCadastroid_cliente.ToString;
+  FService.mtItens.first;
+  vsbProdutos.BeginUpdate;
+  try
+    FEInclusao := false;
+    for var ind := Pred(vsbProdutos.Content.controlsCount) downto 0 do begin
+      if vsbProdutos.Content.Controls.items[ind] is TFramePedidoItem then
+        vsbProdutos.Content.Controls.items[ind].disposeOf;
+    end;
+    //
+    while not FService.mtItens.Eof do
+    begin
+      DoAdicionarItem;
+      FService.mtItens.Next;
+    end;
+  finally
+    vsbProdutos.EndUpdate;
+  end;
+  btnAdicionarProduto.Visible := true;
+  btnConfirmar.Visible := true;
+  AtualizarTotal;
+  TabControlPedido.Next();
+end;
+
 procedure TFrmPedido.OnSelectCliente(const ADataSet: TDataSet);
 begin
   FService.InicializatVenda(ADataSet.FieldByName('ID').AsString);
@@ -243,18 +277,23 @@ begin
   Fservice.AdicionarProduto(ADataSet);
   vsbProdutos.BeginUpdate;
   try
-    var LFrame := GetFrameProduto(FService.mtItensid_produto.AsString);
-    LFrame.Align := TAlignLayout.top;
-    LFrame.Identify := FService.mtItensid.AsString;
-    LFrame.IdProduto := FService.mtItensid_produto.AsString;
-    LFrame.txtQtd.text := Fservice.mtItensquantidade.AsString;
-    LFrame.txtDescricao.text := Fservice.mtItensnome_produto.AsString;
-    LFrame.txtValor.text := formatFloat('R$ ,0.00', Fservice.mtItensTotal.AsCurrency);
-    LFrame.Parent := vsbProdutos;
+    DoAdicionarItem;
   finally
     vsbProdutos.EndUpdate;
   end;
   AtualizarTotal;
+end;
+
+procedure TFrmPedido.DoAdicionarItem;
+begin
+  var LFrame := GetFrameProduto(FService.mtItensid_produto.AsString);
+  LFrame.Align := TAlignLayout.top;
+  LFrame.Identify := FService.mtItensid.AsString;
+  LFrame.IdProduto := FService.mtItensid_produto.AsString;
+  LFrame.txtQtd.text := Fservice.mtItensquantidade.AsString;
+  LFrame.txtDescricao.text := Fservice.mtItensnome_produto.AsString;
+  LFrame.txtValor.text := formatFloat('R$ ,0.00', Fservice.mtItensTotal.AsCurrency);
+  LFrame.Parent := vsbProdutos;
 end;
 
 function TFrmPedido.GetFrameProduto(const AIdProduto: String): TFramePedidoItem;

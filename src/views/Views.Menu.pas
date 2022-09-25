@@ -31,6 +31,8 @@ type
     lineSeparator: TLine;
     procedure btnPerfilClick(Sender: TObject);
     procedure btnPedidoClick(Sender: TObject);
+    procedure btnLogoutClick(Sender: TObject);
+    procedure btnHomeClick(Sender: TObject);
   private
     FActiveFrame: TFrameBaseView;
     procedure changeFrame<T: TFrameBaseView>;
@@ -48,6 +50,18 @@ implementation
 uses Views.Home, Views.Perfil, Views.Pedido;
 
 { TFrmMenu }
+
+procedure TFrmMenu.btnHomeClick(Sender: TObject);
+begin
+  inherited;
+  ChangeFrame<TFrmHome>;
+end;
+
+procedure TFrmMenu.btnLogoutClick(Sender: TObject);
+begin
+  inherited;
+  Self.DisposeOf;
+end;
 
 procedure TFrmMenu.btnPedidoClick(Sender: TObject);
 begin
