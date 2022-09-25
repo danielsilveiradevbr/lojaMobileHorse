@@ -45,6 +45,7 @@ type
     procedure btnVoltarClick(Sender: TObject);
     procedure btnBuscaClienteClick(Sender: TObject);
     procedure btnAdicionarProdutoClick(Sender: TObject);
+    procedure btnConfirmarClick(Sender: TObject);
   private
     FService: TServicePedido;
     procedure DesignPedidos;
@@ -56,6 +57,7 @@ type
     procedure OnEditItem(ASender: TObject);
     procedure AtualizarTotal;
     procedure OnDeletePedido(ASender: TObject);
+    procedure ListarPedidos;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -101,9 +103,18 @@ begin
   LFrame.BringToFront;
 end;
 
+procedure TFrmPedido.btnConfirmarClick(Sender: TObject);
+begin
+  inherited;
+  TabControlPedido.Previous();
+  ListarPedidos;
+end;
+
 procedure TFrmPedido.btnVoltarClick(Sender: TObject);
 begin
   inherited;
+  if FService.mtCadastro.Active and (FService.mtCadastroid.asLargeInt > 0) then
+    FService.DeletarPedido(FService.mtCadastroid.AsString);
   TabControlPedido.Previous();
 end;
 
@@ -126,7 +137,7 @@ begin
   try
     for var ind := Pred(vsbPedidos.Content.controlsCount) downto 0 do begin
       if vsbPedidos.Content.Controls.items[ind] is TFramePedido then
-        vsbPedidos.Controls.items[ind].disposeOf;
+        vsbPedidos.Content.Controls.items[ind].disposeOf;
     end;
     FSErvice.mtPedidos.first;
     while not FSErvice.mtPedidos.eof do
@@ -143,7 +154,7 @@ begin
       LFramePedido.OnDeletePedido := Self.OnDeletePedido;
       FSErvice.mtPedidos.next;
     end;
-    retOffSet.Position.x := vsbPedidos.Content.controlsCount * 130 + retOffSet.Height;
+    //retOffSet.Position.x := vsbPedidos.Content.controlsCount * 130 + retOffSet.Height;
   finally
 
   end;
@@ -159,6 +170,11 @@ end;
 procedure TFrmPedido.DoAfterShow;
 begin
   TabControlPedido.ActiveTab := TabItemConsulta;
+  ListarPedidos;
+end;
+
+procedure TFrmPedido.ListarPedidos;
+begin
   TAguarde.Aguardar(
     procedure
     begin
@@ -176,6 +192,11 @@ end;
 
 procedure TFrmPedido.NovaVenda;
 begin
+  for var ind := Pred(vsbProdutos.Content.controlsCount) downto 0 do begin
+    if vsbProdutos.Content.Controls.items[ind] is TFramePedidoItem then
+      vsbProdutos.Content.Controls.items[ind].disposeOf;
+  end;
+  FService.NovaVenda;
   btnAdicionarProduto.Visible := false;
   txtNomeCliente.text := 'Nenhum cliente selecionado';
   txtTotal.text := formatFloat('R$ ,0.00;', 0);
@@ -197,6 +218,8 @@ begin
     exit;
   FService.DeletarPedido(TFramePedido(Asender).Identify);
   TFramePedido(Asender).DisposeOf;
+  lytNenhumaVenda.Visible := FService.mtPedidos.isEmpty;
+  vsbPedidos.Visible := not FService.mtPedidos.isEmpty;
 end;
 
 procedure TFrmPedido.OnEditItem(ASender: TObject);

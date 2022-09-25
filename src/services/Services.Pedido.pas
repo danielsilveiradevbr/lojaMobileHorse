@@ -43,6 +43,7 @@ type
     procedure DeletarItem(const AId: String);
     procedure DeletarPedido(const AId: String);
     procedure AlterarQuantidadeItem(const AQuantidade, AId: String);
+    procedure NovaVenda;
   end;
 
 
@@ -152,15 +153,18 @@ end;
 
 procedure TServicePedido.DeletarPedido(const AId: String);
 begin
-  var LResponse := TRequest
-               .new
-                .BaseURL('http://localhost:9000')
-                .Resource('pedidos')
-                .ResourceSuffix(AId)
-                .Delete;
-  if LResponse.StatusCode <> 204 then
-    raise Exception.Create(LResponse.Content);
-  mtPedidos.delete;
+  if mtPedidos.Locate('id', AId, []) then
+  begin
+    var LResponse := TRequest
+                  .new
+                  .BaseURL('http://localhost:9000')
+                  .Resource('pedidos')
+                  .ResourceSuffix(AId)
+                  .Delete;
+    if LResponse.StatusCode <> 204 then
+      raise Exception.Create(LResponse.Content);
+    mtPedidos.delete;
+  end;
 end;
 
 procedure TServicePedido.InicializatVenda(const AIDCliente: String);
@@ -217,6 +221,12 @@ procedure TServicePedido.mtItensBeforePost(DataSet: TDataSet);
 begin
   inherited;
   mtItenstotal.AsCurrency := mtItensvalor.AsCurrency * mtItensquantidade.AsInteger;
+end;
+
+procedure TServicePedido.NovaVenda;
+begin
+  mtItens.Close;
+  mtCadastro.close;
 end;
 
 end.

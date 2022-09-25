@@ -48,8 +48,9 @@ inherited FrmPedido: TFrmPedido
             Viewport.Width = 350.000000000000000000
             Viewport.Height = 500.000000000000000000
             object retOffSet: TRectangle
-              Align = Top
+              Align = Bottom
               Fill.Color = xFFF1F3F6
+              Position.Y = 420.000000000000000000
               Size.Width = 350.000000000000000000
               Size.Height = 80.000000000000000000
               Size.PlatformDefault = False
@@ -384,6 +385,7 @@ inherited FrmPedido: TFrmPedido
             Text = 'Confirmar'
             TextSettings.Font.Family = 'Roboto'
             TextSettings.Font.Size = 18.000000000000000000
+            OnClick = btnConfirmarClick
           end
         end
       end
