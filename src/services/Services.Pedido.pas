@@ -33,6 +33,7 @@ type
     mtItenstotal: TCurrencyField;
     mtPedidostotal: TCurrencyField;
     procedure DataModuleCreate(Sender: TObject);
+    procedure mtItensBeforePost(DataSet: TDataSet);
   private
     procedure AtualizarTotal();
   public
@@ -41,6 +42,7 @@ type
     procedure AdicionarProduto(const ADataSet: TDataSet);
     procedure DeletarItem(const AId: String);
     procedure DeletarPedido(const AId: String);
+    procedure AlterarQuantidadeItem(const AQuantidade, AId: String);
   end;
 
 
@@ -65,7 +67,7 @@ begin
   mtItensvalor.AsCurrency := ADataSet.FieldByName('valor').AsCurrency;
   mtItensquantidade.AsInteger := mtItensquantidade.AsInteger + 1;
   mtItensnome_produto.AsString := ADataSet.FieldByName('nome').AsString;
-  mtItenstotal.AsCurrency := mtItensvalor.AsCurrency * mtItensquantidade.AsInteger;
+  //
   mtItens.post;
   var LRequest := TRequest
                   .new
@@ -85,6 +87,26 @@ begin
       raise Exception.create(LResponse.Content);
     mtItens.MergeFromJSONObject(TJSonObject(LResponse.JsonValue), false);
   end;
+  AtualizarTotal;
+end;
+
+procedure TServicePedido.AlterarQuantidadeItem(const AQuantidade, AId: String);
+begin
+  if not mtItens.locate('ID', AId, []) then
+    exit;
+  mtItens.edit;
+  mtItensquantidade.AsInteger := AQuantidade.ToInteger;
+  mtItens.Post;
+  //
+  var LResponse := TRequest
+                  .new
+                  .BaseURL('http://localhost:9000')
+                  .Resource('pedidos/' + mtCadastroid.asString + '/itens')
+                  .ResourceSuffix(AId)
+                  .AddBody(mtItens.TOJSonObject)
+                  .Put;
+  if LResponse.StatusCode <> 204 then
+    raise Exception.Create(LResponse.Content);
   AtualizarTotal;
 end;
 
@@ -189,6 +211,12 @@ begin
     raise Exception.Create(LResponse.Content);
   mtPedidos.EmptyDataSet;
   mtPedidos.LoadFromJSON(LResponse.JSONValue.GetValue<TJSONArray>('data'), false);
+end;
+
+procedure TServicePedido.mtItensBeforePost(DataSet: TDataSet);
+begin
+  inherited;
+  mtItenstotal.AsCurrency := mtItensvalor.AsCurrency * mtItensquantidade.AsInteger;
 end;
 
 end.

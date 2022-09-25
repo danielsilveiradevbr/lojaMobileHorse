@@ -203,7 +203,8 @@ procedure TFrmPedido.OnEditItem(ASender: TObject);
 begin
   if not ASender.InheritsFrom(TFramePedidoItem) then
     exit;
-  ShowMessage('Quantidade alterada com sucesso!');
+  FService.AlterarQuantidadeItem(TFramePedidoItem(Asender).txtQtd.Text, TFramePedidoItem(Asender).Identify);
+  AtualizarTotal;
 end;
 
 procedure TFrmPedido.OnSelectCliente(const ADataSet: TDataSet);

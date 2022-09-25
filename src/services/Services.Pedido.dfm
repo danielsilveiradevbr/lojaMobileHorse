@@ -78,6 +78,7 @@ inherited ServicePedido: TServicePedido
     end
   end
   object mtItens: TFDMemTable
+    BeforePost = mtItensBeforePost
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
