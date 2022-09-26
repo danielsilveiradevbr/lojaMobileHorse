@@ -39,11 +39,14 @@ begin
                    .BaseURL('http://localhost:9000')
                    .Resource('clientes')
                    .AddParam('nome', Anome)
+                   .AddParam('limit', '25')
+                   .AddParam('offset', self.offset.toString)
                    .Get;
   if LResponse.StatusCode <> 200 then
     raise Exception.Create(LResponse.Content);
   mtClientes.EmptyDataSet;
   mtClientes.LoadFromJSON(LResponse.JSONValue.GetValue<TJSONArray>('data'), false);
+  self.recordcount := Lresponse.JSONValue.GetValue<integer>('records', 0);
 end;
 
 end.

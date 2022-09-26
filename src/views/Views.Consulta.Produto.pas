@@ -25,14 +25,23 @@ type
     lytBuscaVazia: TLayout;
     txtBuscaVazia: TLabel;
     imgBuscaVazia: TPath;
+    retFooter: TRectangle;
+    btnAnterior: TButton;
+    imAnterior: TPath;
+    btnProximo: TButton;
+    imgProximo: TPath;
+    lblPaginas: TLabel;
     procedure btnVoltarClick(Sender: TObject);
     procedure btnBuscarClick(Sender: TObject);
+    procedure btnProximoClick(Sender: TObject);
+    procedure btnAnteriorClick(Sender: TObject);
   private
     FService: TServiceConsultaProduto;
     FCallBack: TCallBackDataSet;
     FListaFrames: TObjectList<TFrameListProduto>;
     procedure DesignProdutos;
     procedure OnSelectProduto(const AValue: String);
+    procedure List(const AOffset: integer);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -43,21 +52,22 @@ implementation
 
 {$R *.fmx}
 
+procedure TFrameConsultaProduto.btnAnteriorClick(Sender: TObject);
+begin
+  inherited;
+  List(FService.Offset - 25);
+end;
+
 procedure TFrameConsultaProduto.btnBuscarClick(Sender: TObject);
 begin
   inherited;
-  TAguarde.Aguardar(
-    procedure
-    begin
-      FService.listarProdutos(edtPesquisa.text);
-      TThread.Synchronize(TThread.current,
-        procedure
-        begin
-          DesignProdutos;
-        end
-      )
-    end
-  );
+  List(0);
+end;
+
+procedure TFrameConsultaProduto.btnProximoClick(Sender: TObject);
+begin
+  inherited;
+  List(FService.Offset + 25);
 end;
 
 procedure TFrameConsultaProduto.btnVoltarClick(Sender: TObject);
@@ -72,6 +82,7 @@ begin
   inherited Create(AOwner);
   FService := TServiceConsultaProduto.Create(self);
   FListaFrames := TObjectList<TFrameListProduto>.create;
+  retFooter.visible := false;
 end;
 
 procedure TFrameConsultaProduto.DesignProdutos;
@@ -98,6 +109,13 @@ begin
       FListaFrames.add(LFrame);
       FService.mtProdutos.next;
     end;
+    retFooter.Visible := FService.GetPaginas > 1;
+    if retFooter.Visible then
+    begin
+      lblPaginas.text := format('%d de %d', [FService.GetPaginaCorrente, fService.GetPaginas]);
+      btnProximo.Visible := (FService.offset + 25) < Fservice.RecordCount;
+      btnAnterior.Visible := (FService.offset > 0);
+    end;
   finally
     vsb.endUpdate;
   end;
@@ -108,6 +126,23 @@ begin
   FListaFrames.free;
   FService.free;
   inherited;
+end;
+
+procedure TFrameConsultaProduto.List(const AOffset: integer);
+begin
+  FService.Offset := AOffset;
+  TAguarde.Aguardar(
+    procedure
+    begin
+      FService.listarProdutos(edtPesquisa.text);
+      TThread.Synchronize(TThread.current,
+        procedure
+        begin
+          DesignProdutos;
+        end
+      )
+    end
+  );
 end;
 
 procedure TFrameConsultaProduto.OnSelectProduto(const AValue: String);

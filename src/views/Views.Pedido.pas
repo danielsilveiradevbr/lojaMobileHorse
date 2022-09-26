@@ -41,11 +41,19 @@ type
     btnConfirmar: TButton;
     Line1: TLine;
     retOffSet: TRectangle;
+    retFooter: TRectangle;
+    btnAnterior: TButton;
+    imAnterior: TPath;
+    btnProximo: TButton;
+    imgProximo: TPath;
+    lblPaginas: TLabel;
     procedure btnAdicionarVendaClick(Sender: TObject);
     procedure btnVoltarClick(Sender: TObject);
     procedure btnBuscaClienteClick(Sender: TObject);
     procedure btnAdicionarProdutoClick(Sender: TObject);
     procedure btnConfirmarClick(Sender: TObject);
+    procedure btnAnteriorClick(Sender: TObject);
+    procedure btnProximoClick(Sender: TObject);
   private
     FService: TServicePedido;
     FEInclusao: boolean;
@@ -59,8 +67,8 @@ type
     procedure AtualizarTotal;
     procedure OnDeletePedido(ASender: TObject);
     procedure OnEditPedido(ASender: TObject);
-    procedure ListarPedidos;
     procedure DoAdicionarItem;
+    procedure List(const AOffset: integer);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -96,6 +104,12 @@ begin
   NovaVenda;
 end;
 
+procedure TFrmPedido.btnAnteriorClick(Sender: TObject);
+begin
+  inherited;
+  List(Fservice.Offset - 25);
+end;
+
 procedure TFrmPedido.btnBuscaClienteClick(Sender: TObject);
 begin
   inherited;
@@ -110,7 +124,13 @@ procedure TFrmPedido.btnConfirmarClick(Sender: TObject);
 begin
   inherited;
   TabControlPedido.Previous();
-  ListarPedidos;
+  List(FService.RecordCount - 25);
+end;
+
+procedure TFrmPedido.btnProximoClick(Sender: TObject);
+begin
+  inherited;
+  List(Fservice.Offset + 25);
 end;
 
 procedure TFrmPedido.btnVoltarClick(Sender: TObject);
@@ -126,6 +146,7 @@ begin
   inherited Create(AOwner);
   FService := TServicePedido.Create(self);
   btnConfirmar.Visible := false;
+  retFooter.visible := false;
 end;
 
 procedure TFrmPedido.DesignPedidos;
@@ -159,6 +180,13 @@ begin
       FSErvice.mtPedidos.next;
     end;
     //retOffSet.Position.x := vsbPedidos.Content.controlsCount * 130 + retOffSet.Height;
+    retFooter.Visible := FService.GetPaginas > 1;
+    if retFooter.Visible then
+    begin
+      lblPaginas.text := format('%d de %d', [FService.GetPaginaCorrente, fService.GetPaginas]);
+      btnProximo.Visible := (FService.offset + 25) < Fservice.RecordCount;
+      btnAnterior.Visible := (FService.offset > 0);
+    end;
   finally
 
   end;
@@ -174,11 +202,12 @@ end;
 procedure TFrmPedido.DoAfterShow;
 begin
   TabControlPedido.ActiveTab := TabItemConsulta;
-  ListarPedidos;
+  List(0);
 end;
 
-procedure TFrmPedido.ListarPedidos;
+procedure TFrmPedido.List(const AOffset: integer);
 begin
+  FService.Offset := AOffset;
   TAguarde.Aguardar(
     procedure
     begin

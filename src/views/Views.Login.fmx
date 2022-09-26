@@ -104,7 +104,7 @@ inherited frmLogin: TfrmLogin
           Align = Top
           StyleLookup = 'transparentedit'
           Password = True
-          Text = '1234'
+          Text = '123'
           TextSettings.Font.Family = 'Roboto'
           TextSettings.Font.Size = 18.000000000000000000
           Position.X = 20.000000000000000000
