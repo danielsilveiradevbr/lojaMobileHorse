@@ -37,7 +37,7 @@ type
 implementation
 
 uses
-  System.SysUtils;
+  System.SysUtils, Providers.Constants;
 
 { TRequest }
 
@@ -148,7 +148,7 @@ begin
                     .TRequest
                     .new
                     .token('bearer ' + TSession.getInstance().token.Refresh)
-                    .baseUrl('http://localhost:9001')
+                    .baseUrl(SERVER_AUTH)
                     .Resource('refresh')
                     .get;
   result := LResponse.StatusCode = 200;

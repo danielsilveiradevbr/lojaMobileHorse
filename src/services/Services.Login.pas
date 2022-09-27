@@ -17,7 +17,7 @@ type
 implementation
 
 uses
-  System.Json, Providers.Session;
+  System.Json, Providers.Session, Providers.Constants;
 
 {%CLASSGROUP 'FMX.Controls.TControl'}
 
@@ -34,7 +34,7 @@ begin
   LUsuario.addPair('senha', APassword);
   var LResponse := TRequest
                    .new
-                   .baseUrl('http://localhost:9001')
+                   .baseUrl(SERVER_AUTH)
                    .resource('login')
                    .addBody(LUsuario)
                    .post;
@@ -49,7 +49,7 @@ procedure TServiceLogin.carregarDadosUsuario(const AUsername: String);
 begin
   var LResponse := TRequest
                    .new
-                   .baseUrl('http://localhost:9000')
+                   .baseUrl(SERVER_PRINCIPAL)
                    .resource('usuarios')
                    .addParam('login', AUsername)
                    .get;

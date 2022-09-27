@@ -373,6 +373,7 @@
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="src\providers\dialogs\Providers.Dialogs.Error.pas"/>
+        <DCCReference Include="src\providers\Providers.Constants.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

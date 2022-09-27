@@ -18,6 +18,8 @@ implementation
 
 {%CLASSGROUP 'FMX.Controls.TControl'}
 
+uses Providers.Constants;
+
 {$R *.dfm}
 
 { TServiceBase1 }
@@ -27,7 +29,7 @@ begin
   result := TMemorySTream.create;
   var LResponse := TRequest
                    .new
-                   .BaseUrl('http://localhost:9000')
+                   .BaseUrl(SERVER_PRINCIPAL)
                    .resource('usuarios/' + Session.User.ID.toString + '/foto')
                    .contentType('application/octet-stream')
                    .get;
@@ -45,7 +47,7 @@ procedure TServicePerfil.UploadFoto(const AFoto: TMemoryStream);
 begin
   var LResponse := TRequest
                    .new
-                   .BaseUrl('http://localhost:9000')
+                   .BaseUrl(SERVER_PRINCIPAL)
                    .Resource('usuarios/' + Session.User.ID.ToString + '/foto')
                    .contentType('application/octet-stream')
                    .AddBody(Afoto, false)

@@ -34,7 +34,8 @@ uses
   Providers.Dialogs.Views.Input in 'src\providers\dialogs\views\Providers.Dialogs.Views.Input.pas' {frmDialogInput: TFrame},
   Providers.Dialogs.Input in 'src\providers\dialogs\Providers.Dialogs.Input.pas',
   Providers.Dialogs.Views.Error in 'src\providers\dialogs\views\Providers.Dialogs.Views.Error.pas' {frmDialogError: TFrame},
-  Providers.Dialogs.Error in 'src\providers\dialogs\Providers.Dialogs.Error.pas';
+  Providers.Dialogs.Error in 'src\providers\dialogs\Providers.Dialogs.Error.pas',
+  Providers.Constants in 'src\providers\Providers.Constants.pas';
 
 {$R *.res}
 

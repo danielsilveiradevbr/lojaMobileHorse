@@ -51,7 +51,7 @@ type
 
 implementation
 
-uses DataSet.Serialize, System.JSON;
+uses DataSet.Serialize, System.JSON, Providers.Constants;
 
 {%CLASSGROUP 'FMX.Controls.TControl'}
 
@@ -74,7 +74,7 @@ begin
   mtItens.post;
   var LRequest := TRequest
                   .new
-                  .BaseURL('http://localhost:9000')
+                  .BaseURL(SERVER_PRINCIPAL)
                   .Resource('pedidos/' + mtCadastroid.asString + '/itens')
                   .AddBody(mtItens.tojsonobject);
   if mtItensid.AsLargeInt > 0 then
@@ -103,7 +103,7 @@ begin
   //
   var LResponse := TRequest
                   .new
-                  .BaseURL('http://localhost:9000')
+                  .BaseURL(SERVER_PRINCIPAL)
                   .Resource('pedidos/' + mtCadastroid.asString + '/itens')
                   .ResourceSuffix(AId)
                   .AddBody(mtItens.TOJSonObject)
@@ -135,7 +135,7 @@ procedure TServicePedido.CarregarPedido(const AId: String);
 begin
   var LResponse := TRequest
                    .new
-                   .baseUrl('http://localhost:9000')
+                   .baseUrl(SERVER_PRINCIPAL)
                    .resource('pedidos')
                    .ResourceSuffix(AId)
                    .Get;
@@ -153,7 +153,7 @@ procedure TServicePedido.CarregarItensPedido(const AId: String);
 begin
   var LResponse := TRequest
                    .new
-                   .baseUrl('http://localhost:9000')
+                   .baseUrl(SERVER_PRINCIPAL)
                    .resource('pedidos/' + AId + '/itens')
                    .Get;
   if LResponse.StatusCode <> 200 then
@@ -176,7 +176,7 @@ begin
     raise Exception.Create('Item não localizado');
   var LResponse := TRequest
                .new
-                .BaseURL('http://localhost:9000')
+                .BaseURL(SERVER_PRINCIPAL)
                 .Resource('pedidos/' + mtCadastroid.asString + '/itens')
                 .ResourceSuffix(AId)
                 .Delete;
@@ -192,7 +192,7 @@ begin
   begin
     var LResponse := TRequest
                   .new
-                  .BaseURL('http://localhost:9000')
+                  .BaseURL(SERVER_PRINCIPAL)
                   .Resource('pedidos')
                   .ResourceSuffix(AId)
                   .Delete;
@@ -220,7 +220,7 @@ begin
   mtCadastro.Post;
   var LRequest := TRequest
                    .New
-                   .BaseURL('http://localhost:9000')
+                   .BaseURL(SERVER_PRINCIPAL)
                    .Resource('pedidos')
                    .AddBody(mtCadastro.TOJSonObject);
   if (mtCadastroid.AsLargeInt > 0 ) then
@@ -242,7 +242,7 @@ procedure TServicePedido.ListarPedidosUsuario;
 begin
   var LResponse := TRequest
                    .New
-                   .BaseURL('http://localhost:9000')
+                   .BaseURL(SERVER_PRINCIPAL)
                    .Resource('pedidos')
                    .AddParam('idUsuario', Session.User.Id.ToString)
                    .AddParam('limit', '25')

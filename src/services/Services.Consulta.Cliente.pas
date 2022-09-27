@@ -24,7 +24,7 @@ implementation
 
 {%CLASSGROUP 'FMX.Controls.TControl'}
 
-uses Providers.Request, DataSet.Serialize, System.JSON;
+uses Providers.Request, DataSet.Serialize, System.JSON, Providers.Constants;
 
 {$R *.dfm}
 
@@ -36,7 +36,7 @@ begin
     mtClientes.Open;
   var LResponse := TRequest
                    .New
-                   .BaseURL('http://localhost:9000')
+                   .BaseURL(SERVER_PRINCIPAL)
                    .Resource('clientes')
                    .AddParam('nome', Anome)
                    .AddParam('limit', '25')
