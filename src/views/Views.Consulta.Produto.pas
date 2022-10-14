@@ -55,7 +55,8 @@ implementation
 procedure TFrameConsultaProduto.btnAnteriorClick(Sender: TObject);
 begin
   inherited;
-  List(FService.Offset - 25);
+  if (FService.offset > 0) then
+    List(FService.Offset - 25);
 end;
 
 procedure TFrameConsultaProduto.btnBuscarClick(Sender: TObject);
@@ -67,7 +68,8 @@ end;
 procedure TFrameConsultaProduto.btnProximoClick(Sender: TObject);
 begin
   inherited;
-  List(FService.Offset + 25);
+  if (FService.offset + 25) < Fservice.RecordCount then
+    List(FService.Offset + 25);
 end;
 
 procedure TFrameConsultaProduto.btnVoltarClick(Sender: TObject);
@@ -113,8 +115,6 @@ begin
     if retFooter.Visible then
     begin
       lblPaginas.text := format('%d de %d', [FService.GetPaginaCorrente, fService.GetPaginas]);
-      btnProximo.Visible := (FService.offset + 25) < Fservice.RecordCount;
-      btnAnterior.Visible := (FService.offset > 0);
     end;
   finally
     vsb.endUpdate;

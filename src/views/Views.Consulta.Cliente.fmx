@@ -179,7 +179,7 @@ inherited FrameConsultaCliente: TFrameConsultaCliente
         Size.Height = 50.000000000000000000
         Size.PlatformDefault = False
         Stroke.Kind = None
-        object btnAnterior: TButton
+        object q: TButton
           Align = Left
           Margins.Left = 3.000000000000000000
           Margins.Top = 1.000000000000000000
@@ -190,7 +190,7 @@ inherited FrameConsultaCliente: TFrameConsultaCliente
           Size.Height = 48.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'TransparentRoundButton'
-          OnClick = btnAnteriorClick
+          OnClick = qClick
           object imAnterior: TPath
             Align = Center
             Data.Path = {
@@ -244,8 +244,8 @@ inherited FrameConsultaCliente: TFrameConsultaCliente
           end
         end
         object lblPaginas: TLabel
+          Align = Center
           StyledSettings = [Style]
-          Position.X = 51.000000000000000000
           Size.Width = 248.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False

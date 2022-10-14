@@ -249,8 +249,8 @@ inherited FrameConsultaProduto: TFrameConsultaProduto
             end
           end
           object lblPaginas: TLabel
+            Align = Center
             StyledSettings = [Style]
-            Position.X = 51.000000000000000000
             Size.Width = 248.000000000000000000
             Size.Height = 50.000000000000000000
             Size.PlatformDefault = False

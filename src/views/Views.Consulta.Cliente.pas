@@ -25,14 +25,14 @@ type
     imgBuscaVazia: TPath;
     vsbClientes: TVertScrollBox;
     retFooter: TRectangle;
-    btnAnterior: TButton;
+    q: TButton;
     imAnterior: TPath;
     btnProximo: TButton;
     imgProximo: TPath;
     lblPaginas: TLabel;
     procedure btnBuscaClienteClick(Sender: TObject);
     procedure btnVoltarClick(Sender: TObject);
-    procedure btnAnteriorClick(Sender: TObject);
+    procedure qClick(Sender: TObject);
     procedure btnProximoClick(Sender: TObject);
   private
     FService: TServiceConsultaCliente;
@@ -72,10 +72,11 @@ begin
   );
 end;
 
-procedure TFrameConsultaCliente.btnAnteriorClick(Sender: TObject);
+procedure TFrameConsultaCliente.qClick(Sender: TObject);
 begin
   inherited;
-  List(FService.Offset - 25);
+  if (FService.offset > 0) then
+    List(FService.Offset - 25);
 end;
 
 procedure TFrameConsultaCliente.btnBuscaClienteClick(Sender: TObject);
@@ -87,7 +88,8 @@ end;
 procedure TFrameConsultaCliente.btnProximoClick(Sender: TObject);
 begin
   inherited;
-  List(FService.Offset + 25);
+  if (FService.offset + 25) < Fservice.RecordCount then
+    List(FService.Offset + 25);
 end;
 
 procedure TFrameConsultaCliente.btnVoltarClick(Sender: TObject);
@@ -131,8 +133,6 @@ begin
     if retFooter.Visible then
     begin
       lblPaginas.text := format('%d de %d', [FService.GetPaginaCorrente, fService.GetPaginas]);
-      btnProximo.Visible := (FService.offset + 25) < Fservice.RecordCount;
-      btnAnterior.Visible := (FService.offset > 0);
     end;
   finally
     vsbClientes.endUpdate;

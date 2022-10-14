@@ -39,10 +39,13 @@ inherited frmHome: TfrmHome
       WrapMode = Fit
     end
     object lblVersao: TLabel
-      Anchors = [akLeft, akBottom]
+      Align = Bottom
       StyledSettings = [Style]
-      Position.X = 115.000000000000000000
-      Position.Y = 472.000000000000000000
+      Margins.Bottom = 10.000000000000000000
+      Position.Y = 473.000000000000000000
+      Size.Width = 350.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
       TextSettings.Font.Family = 'Roboto'
       TextSettings.Font.Size = 15.000000000000000000
       TextSettings.FontColor = xFF1464BE

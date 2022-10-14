@@ -4,6 +4,7 @@ object frmPrincipal: TfrmPrincipal
   ClientHeight = 500
   ClientWidth = 350
   Position = ScreenCenter
+  Quality = HighQuality
   StyleBook = StyleBook
   FormFactor.Width = 320
   FormFactor.Height = 480

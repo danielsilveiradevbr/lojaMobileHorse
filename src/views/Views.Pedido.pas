@@ -107,7 +107,8 @@ end;
 procedure TFrmPedido.btnAnteriorClick(Sender: TObject);
 begin
   inherited;
-  List(Fservice.Offset - 25);
+  if (FService.offset > 0) then
+    List(Fservice.Offset - 25);
 end;
 
 procedure TFrmPedido.btnBuscaClienteClick(Sender: TObject);
@@ -130,7 +131,8 @@ end;
 procedure TFrmPedido.btnProximoClick(Sender: TObject);
 begin
   inherited;
-  List(Fservice.Offset + 25);
+  if (FService.offset + 25) < Fservice.RecordCount then
+    List(Fservice.Offset + 25);
 end;
 
 procedure TFrmPedido.btnVoltarClick(Sender: TObject);
@@ -184,8 +186,6 @@ begin
     if retFooter.Visible then
     begin
       lblPaginas.text := format('%d de %d', [FService.GetPaginaCorrente, fService.GetPaginas]);
-      btnProximo.Visible := (FService.offset + 25) < Fservice.RecordCount;
-      btnAnterior.Visible := (FService.offset > 0);
     end;
   finally
 

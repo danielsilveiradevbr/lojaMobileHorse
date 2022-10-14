@@ -24,6 +24,7 @@ type
     lytFooter: TLayout;
     lblSolicitarAcesso: TLabel;
     lblRecuperSenha: TLabel;
+    GridPanelLayout1: TGridPanelLayout;
     procedure btnEntrarClick(Sender: TObject);
   private
     FService: TServiceLogin;
