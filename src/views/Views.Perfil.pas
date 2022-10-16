@@ -6,7 +6,8 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   Providers.Frames.Base.View, FMX.Layouts, FMX.Objects,
-  FMX.Controls.Presentation, Services.Perfil, FMX.MultiView;
+  FMX.Controls.Presentation, Services.Perfil, FMX.MultiView,
+  FMX.MediaLibrary.Actions, System.Actions, FMX.ActnList, FMX.StdActns;
 
 type
   TfrmPerfil = class(TFrameBaseView)
@@ -32,7 +33,13 @@ type
     lblGaleria: TLabel;
     btnTrocarFoto: TButton;
     OpenDialog: TOpenDialog;
+    ActionList: TActionList;
+    TakePhotoFromLibraryAction: TTakePhotoFromLibraryAction;
+    TakePhotoFromCameraAction: TTakePhotoFromCameraAction;
     procedure btnGaleriaClick(Sender: TObject);
+    procedure btnCameraClick(Sender: TObject);
+    procedure TakePhotoFromLibraryActionDidFinishTaking(Image: TBitmap);
+    procedure TakePhotoFromCameraActionDidFinishTaking(Image: TBitmap);
   private
     FService: TServicePerfil;
     procedure carregarFotoUsuario();
@@ -45,7 +52,17 @@ implementation
 
 {$R *.fmx}
 
+uses Providers.Permision.Camera;
+
 { TfrmPerfil }
+
+procedure TfrmPerfil.btnCameraClick(Sender: TObject);
+begin
+  inherited;
+{$IFDEF ANDROID}
+  TakePhotoFromCameraAction.Execute;
+{$ENDIF}
+end;
 
 procedure TfrmPerfil.btnGaleriaClick(Sender: TObject);
 begin
@@ -53,6 +70,9 @@ begin
 {$IFDEF MSWINDOWS}
   if openDialog.execute then
     OnChangeProfileImage(TBitmap.CreateFromFile(OpenDialog.FileName));
+{$ENDIF}
+{$IFDEF ANDROID}
+  TakePhotoFromLibraryAction.Execute;
 {$ENDIF}
 end;
 
@@ -77,6 +97,7 @@ begin
   FService := TServicePerfil.create(self);
   MultiView.Height := 100;
   carregarFotoUsuario;
+  TCameraPermision.New.Request;
 end;
 
 procedure TfrmPerfil.OnChangeProfileImage(const ABitmap: TBitmap);
@@ -93,6 +114,18 @@ begin
     Lfoto.Free;
   end;
   MultiView.HideMaster;
+end;
+
+procedure TfrmPerfil.TakePhotoFromCameraActionDidFinishTaking(Image: TBitmap);
+begin
+  inherited;
+  OnChangeProfileImage(Image);
+end;
+
+procedure TfrmPerfil.TakePhotoFromLibraryActionDidFinishTaking(Image: TBitmap);
+begin
+  inherited;
+  OnChangeProfileImage(Image);
 end;
 
 end.

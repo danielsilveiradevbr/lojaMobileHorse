@@ -35,13 +35,13 @@ uses
   Providers.Dialogs.Input in 'src\providers\dialogs\Providers.Dialogs.Input.pas',
   Providers.Dialogs.Views.Error in 'src\providers\dialogs\views\Providers.Dialogs.Views.Error.pas' {frmDialogError: TFrame},
   Providers.Dialogs.Error in 'src\providers\dialogs\Providers.Dialogs.Error.pas',
-  Providers.Constants in 'src\providers\Providers.Constants.pas';
+  Providers.Constants in 'src\providers\Providers.Constants.pas',
+  Providers.Permision.Camera in 'src\providers\Permisions\Providers.Permision.Camera.pas';
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
-  Application.CreateForm(TServiceConsultaProduto, ServiceConsultaProduto);
   Application.Run;
 end.
